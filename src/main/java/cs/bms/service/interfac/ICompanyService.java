@@ -16,6 +16,8 @@ public abstract interface ICompanyService
   public abstract List<Object[]> getCreatedByAfterDate(Date paramDate);
   
   public abstract List<Object[]> getEditedByAfterDate(Date paramDate, boolean paramBoolean);
+
+    public List<Object[]> getBasicData();
 }
 
 

@@ -2,8 +2,6 @@
 /*    */ 
 /*    */ import cs.bms.dao.interfac.IProductDao;
 /*    */ import org.hibernate.Query;
-/*    */ import org.hibernate.Session;
-/*    */ import org.hibernate.SessionFactory;
 /*    */ 
 /*    */ public class ProductDao extends gkfire.hibernate.generic.GenericDao<cs.bms.model.Product, Long> implements IProductDao
 /*    */ {
