@@ -9,5 +9,5 @@ import gkfire.hibernate.generic.interfac.IGenericDao;
  * @author Darkus Nightmare
  * @version 1.0
  */
-public abstract interface ISalePaymentDao extends IGenericDao<SalePayment, Long> {
+public interface ISalePaymentDao extends IGenericDao<SalePayment, Long> {
 }

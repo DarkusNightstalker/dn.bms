@@ -11,7 +11,7 @@ import java.util.List;
  * @author Darkus Nightmare
  * @version 1.0
  */
-public abstract interface ISaleService extends IGenericService<Sale, Long> {
+public interface ISaleService extends IGenericService<Sale, Long> {
 
     /**
      * Obtiene las ventas no verificadas de una sede en especifico y que no se tenga los identificadores señalados
