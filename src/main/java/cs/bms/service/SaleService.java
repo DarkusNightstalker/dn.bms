@@ -34,7 +34,7 @@ public class SaleService extends GenericService<Sale, Long> implements ISaleServ
 
     @Override
     public void verified(Long id,boolean credit) {
-        this.dao.updateHQL("UPDATE Sale SET verified=true,credit =? WHERE id = ?", id,credit);
+        this.dao.updateHQL("UPDATE Sale SET verified=true,credit =? WHERE id = ?", credit,id);
     }
 
 //    @Override
