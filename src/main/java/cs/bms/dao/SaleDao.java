@@ -9,6 +9,7 @@ import org.hibernate.Query;
 
 /**
  * Implementación DAO para el modelo SALE
+ *
  * @author Darkus Nightmare
  */
 public class SaleDao extends GenericDao<Sale, Long> implements ISaleDao {
@@ -26,12 +27,18 @@ public class SaleDao extends GenericDao<Sale, Long> implements ISaleDao {
             query.setParameterList("ids", exceptions);
         }
         List<Object[]> data = query.list();
-        query = getSessionFactory().getCurrentSession().createQuery("SELECT s.id FROM Sale s WHERE s.company = :company and s.verified = false and s.active = true " + (!exceptions.isEmpty() ? " and s.id NOT IN (:ids)" : ""));
-        query.setEntity("company", company);
-        if (!exceptions.isEmpty()) {
-            query.setParameterList("ids", exceptions);
+
+        if (!data.isEmpty()) {
+            query = getSessionFactory().getCurrentSession().createQuery("SELECT s.id FROM Sale s WHERE s.company = :company and s.verified = false and s.active = true " + (!exceptions.isEmpty() ? " and s.id NOT IN (:ids)" : ""));
+            query.setEntity("company", company);
+            if (!exceptions.isEmpty()) {
+                query.setParameterList("ids", exceptions);
+            }
+            try {
+                exceptions.addAll(query.list());
+            } catch (UnsupportedOperationException e) {
+            }
         }
-        exceptions.addAll(query.list());
         return data;
     }
 }
