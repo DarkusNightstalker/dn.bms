@@ -18,71 +18,105 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.Formula;
 
+/**
+ * Representa una venta común realizada en el negocio
+ * @version 1.0
+ * @author Darkus Nightmare
+ */
 @Entity
 @Table(name = "sale", catalog = "public")
 @XmlRootElement
 public class Sale implements AuditoryEntity<Long, User>, EntityActivate {
 
+    /**
+     *   Identificador único del registro
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    protected Long id;
+    private Long id;
+    /**
+     *  Serie del comprobante de pago emitido
+     */
     @Column(name = "serie", nullable = false)
-    protected String serie;
+    private String serie;
+    /**
+     * Número correlativo con respecto a la serie del comprobante de pago
+     */
     @Column(name = "document_number", nullable = false)
-    protected String documentNumber;
+    private String documentNumber;
+    /**
+     * Tipo de comprobante de pago
+     */
     @JoinColumn(name = "id_payment_proof", nullable = false)
     @ManyToOne
-    protected PaymentProof paymentProof;
+    private PaymentProof paymentProof;
+    /**
+     *  Muestra si la venta es con CPE
+     */
     @Column(name = "electronic", nullable = false)
-    protected Boolean electronic = Boolean.FALSE;
+    private Boolean electronic = Boolean.FALSE;
+    /**
+     * Muestra si la venta fue enviada a la SUNAT
+     */
     @Column(name = "sent", nullable = false)
-    protected Boolean sent = Boolean.FALSE;
+    private Boolean sent = Boolean.FALSE;
+    /**
+     * Muestra si la venta fue verificada en caja
+     */
     @Column(name = "verified", nullable = false)
-    protected Boolean verified = Boolean.FALSE;
+    private Boolean verified = Boolean.FALSE;
+    /**
+     * Muestra si la venta fue hecha al crédito inicialmente
+     */
+    @Column(name = "credit", nullable = false)
+    private Boolean credit = Boolean.FALSE;
 
     @JoinColumn(name = "id_customer", nullable = true)
     @ManyToOne
-    protected Actor customer;
+    private Actor customer;
     @Column(name = "customer_name")
-    protected String customerName;
+    private String customerName;
+    /**
+     * Puntos generados por esta venta
+     */
     @Column(name = "points")
-    protected Long points = 0L;
+    private Long points = 0L;
     @Column(name = "subtotal", nullable = false)
-    protected BigDecimal subtotal = BigDecimal.ZERO;
+    private BigDecimal subtotal = BigDecimal.ZERO;
     @Column(name = "igv", nullable = false)
-    protected BigDecimal igv = BigDecimal.ZERO;
+    private BigDecimal igv = BigDecimal.ZERO;
     @Column(name = "subtotal_discount", nullable = false)
-    protected BigDecimal subtotalDiscount = BigDecimal.ZERO;
+    private BigDecimal subtotalDiscount = BigDecimal.ZERO;
     @Column(name = "igv_discount", nullable = false)
-    protected BigDecimal igvDiscount = BigDecimal.ZERO;
+    private BigDecimal igvDiscount = BigDecimal.ZERO;
 
     @JoinColumn(name = "id_company", nullable = false)
     @ManyToOne
-    protected Company company;
+    private Company company;
 
     @Column(name = "date_issue", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    protected Date dateIssue;
+    private Date dateIssue;
 
     @JoinColumn(name = "create_uid", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
-    protected User createUser;
+    private User createUser;
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    protected Date createDate;
+    private Date createDate;
     @JoinColumn(name = "edit_uid")
     @ManyToOne(fetch = FetchType.LAZY)
-    protected User editUser;
+    private User editUser;
     @Column(name = "edit_date")
     @Temporal(TemporalType.TIMESTAMP)
-    protected Date editDate;
+    private Date editDate;
     @Column(name = "active", nullable = false)
-    protected Boolean active = Boolean.TRUE;
+    private Boolean active = Boolean.TRUE;
     @Formula("(subtotal + igv - subtotal_discount)")
-    protected BigDecimal total;
+    private BigDecimal total;
     @Formula("(serie||'-'||document_number)")
-    protected String fullDocument;
+    private String fullDocument;
 
     public Sale(Long id) {
         this.id = id;
@@ -101,6 +135,10 @@ public class Sale implements AuditoryEntity<Long, User>, EntityActivate {
         this.id = id;
     }
 
+    /**
+     * 
+     * @return la serie
+     */
     public String getSerie() {
         return this.serie;
     }
@@ -285,5 +323,19 @@ public class Sale implements AuditoryEntity<Long, User>, EntityActivate {
 
     public void setVerified(Boolean verified) {
         this.verified = verified;
+    }
+
+    /**
+     * @return the credit
+     */
+    public Boolean getCredit() {
+        return credit;
+    }
+
+    /**
+     * @param credit the credit to set
+     */
+    public void setCredit(Boolean credit) {
+        this.credit = credit;
     }
 }

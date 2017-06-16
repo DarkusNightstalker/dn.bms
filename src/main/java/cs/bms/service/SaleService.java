@@ -7,14 +7,14 @@ import cs.bms.service.interfac.ISaleService;
 import gkfire.hibernate.generic.GenericService;
 import gkfire.hibernate.generic.interfac.IGenericDao;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
- *
+ * Implementación SERVICE para el modelo SALE
  * @author Darkus Nightmare
+ * @version 1.0
  */
 public class SaleService extends GenericService<Sale, Long> implements ISaleService {
 
@@ -33,18 +33,18 @@ public class SaleService extends GenericService<Sale, Long> implements ISaleServ
     }
 
     @Override
-    public void verified(Long id) {
-        this.dao.updateHQL("UPDATE Sale SET verified=true WHERE id = ?", id);
+    public void verified(Long id,boolean credit) {
+        this.dao.updateHQL("UPDATE Sale SET verified=true,credit =? WHERE id = ?", id,credit);
     }
 
-    @Override
-    public BigDecimal getVisaAfterByCompany(Date date, Company company) {
-        if (date != null) {
-            return (BigDecimal) this.dao.getByHQL("SELECT COALESCE(SUM(s.subtotal+s.igv-s.subtotalDiscount-s.igvDiscount),0) FROM Sale s WHERE  s.active = true AND s.verified = true AND  s.dateIssue > ? AND s.visa = true and s.company = ?", date, company);
-        }
-
-        return (BigDecimal) this.dao.getByHQL("SELECT COALESCE(SUM(s.subtotal+s.igv-s.subtotalDiscount-s.igvDiscount),0) FROM Sale s WHERE  s.active = true AND s.verified = true  AND s.visa = true and s.company = ?", company);
-    }
+//    @Override
+//    public BigDecimal getVisaAfterByCompany(Date date, Company company) {
+//        if (date != null) {
+//            return (BigDecimal) this.dao.getByHQL("SELECT COALESCE(SUM(s.subtotal+s.igv-s.subtotalDiscount-s.igvDiscount),0) FROM Sale s WHERE  s.active = true AND s.verified = true AND  s.dateIssue > ? AND s.visa = true and s.company = ?", date, company);
+//        }
+//
+//        return (BigDecimal) this.dao.getByHQL("SELECT COALESCE(SUM(s.subtotal+s.igv-s.subtotalDiscount-s.igvDiscount),0) FROM Sale s WHERE  s.active = true AND s.verified = true  AND s.visa = true and s.company = ?", company);
+//    }
 
     @Override
     public void updatePoints(Long points, Long id) {
