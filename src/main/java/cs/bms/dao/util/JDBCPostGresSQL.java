@@ -19,7 +19,7 @@ public class JDBCPostGresSQL {
     public JDBCPostGresSQL() {
         try {
             Class.forName("org.postgresql.Driver");
-            this.connection = DriverManager.getConnection("jdbc:postgresql://195.154.56.237:5432/bms", "postgres", "admin1986");
+            this.connection = DriverManager.getConnection(URL, USER,PASSWORD);
         } catch (SQLException ex) {
             Logger.getLogger(JDBCPostGresSQL.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -29,9 +29,9 @@ public class JDBCPostGresSQL {
 
     public Connection getConnection() throws SQLException {
         if (this.connection == null) {
-            this.connection = DriverManager.getConnection("jdbc:postgresql://195.154.56.237:5432/bms", "postgres", "admin1986");
+            this.connection = DriverManager.getConnection(URL, USER,PASSWORD);
         } else if (this.connection.isClosed()) {
-            this.connection = DriverManager.getConnection("jdbc:postgresql://195.154.56.237:5432/bms", "postgres", "admin1986");
+            this.connection = DriverManager.getConnection(URL, USER,PASSWORD);
         }
         return this.connection;
     }
