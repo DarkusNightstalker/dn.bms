@@ -6,16 +6,30 @@ import gkfire.hibernate.generic.interfac.IGenericService;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public abstract interface ISalePaymentService
-  extends IGenericService<SalePayment, Long>
-{
-  public abstract BigDecimal getSumAfterByCompany(Date paramDate, Company paramCompany);
-  
-  public abstract BigDecimal getCreditAfterByCompany(Date paramDate, Company paramCompany);
-}
-
-
-/* Location:              D:\Proyectos\cs.bms.minisol.web-1.0.1\WEB-INF\lib\cs.bms-1.0.jar!\cs\bms\service\interfac\ISalePaymentService.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       0.7.1
+/**
+ * Interfaz SERVICE para el modelo SALE PAYMENT
+ * 
+ * @author Darkus Nightmare
+ * @version 1.0
  */
+public abstract interface ISalePaymentService extends IGenericService<SalePayment, Long> {
+
+    /**
+     * Obtiene la sumatoria de todas las ventas al contado sin <code>VISA</code> de una sede especifica, a partir de un momento determinado en adelante.
+     * De no dar la fecha sumara todos los montos
+     * @param date Momento desde el cual se tomara en cuenta <code>(Puede ser nulo)</code>
+     * @param company Sede
+     * @return monto total de ventas al contado 
+     * 
+     */
+    public abstract BigDecimal getCashAfterByCompany(Date date, Company company);
+
+    /**
+     * Obtiene la sumatoria de todas las ventas al credito de una sede especifica, a partir de un momento determinado en adelante.
+     * De no dar la fecha sumara todos los montos
+     * @param date Momento desde el cual se tomara en cuenta <code>(Puede ser nulo)</code>
+     * @param company Sede
+     * @return monto total de ventas al contado 
+     */
+    public abstract BigDecimal getCreditAfterByCompany(Date date, Company company);
+}
