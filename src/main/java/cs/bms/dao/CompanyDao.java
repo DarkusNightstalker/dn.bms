@@ -12,7 +12,7 @@ public class CompanyDao  extends GenericDao<Company, Integer> implements ICompan
     @Override
     public List<Object[]> getDataByList(List<Long> paramList) {
         if(paramList.isEmpty()) return Collections.EMPTY_LIST;
-        Query query = getSessionFactory().getCurrentSession().createQuery("SELECT c.id,c.name,c.city,c.address FROM Company c WHERE c.active = true AND c.id IN :ids");
+        Query query = getSessionFactory().getCurrentSession().createQuery("SELECT c.id,c.name,c.city,c.address FROM Company c WHERE c.active = true AND c.id IN :ids ORDER BY c.code");
         query.setParameterList("ids", paramList);
         
         return query.list();

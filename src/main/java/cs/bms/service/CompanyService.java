@@ -11,9 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-public class CompanyService
-        extends GenericService<Company, Integer>
-        implements ICompanyService {
+public class CompanyService extends GenericService<Company, Integer> implements ICompanyService {
 
     @Autowired
     @Qualifier("companyDao")
@@ -31,8 +29,22 @@ public class CompanyService
 
     @Override
     public List<Object[]> getBasicDataNotOpening(int year, Month month) {
-        return month == null ? this.dao.listHQL("SELECT c.id,c.code,c.name||' '||c.city||' ('||c.address||')' FROM Company c WHERE c.id NOT IN (SELECT DISTINCT ob.company.id FROM OpeningBalance ob WHERE ob.year  = ? )", new Object[]{Integer.valueOf(year)}) : this.dao.listHQL("SELECT c.id,c.code,c.name||' '||c.city||' ('||c.address||')' FROM Company c WHERE c.id NOT IN (SELECT DISTINCT ob.company.id FROM OpeningBalance ob WHERE ob.year  = ? AND ob.month = ?)", new Object[]{
-            Integer.valueOf(year), month});
+        return month == null
+                ? this.dao.listHQL("SELECT "
+                        + "c.id,"
+                        + "c.code,"
+                        + "c.name||' '||c.city||' ('||c.address||')' "
+                        + "FROM Company c WHERE c.id NOT IN ("
+                            + "SELECT DISTINCT ob.company.id "
+                            + "FROM OpeningBalance ob WHERE ob.year  = ? "
+                        + ")", year)
+                : this.dao.listHQL("SELECT "
+                        + "c.id,"
+                        + "c.code,"
+                        + "c.name||' '||c.city||' ('||c.address||')' "
+                        + "FROM Company c WHERE c.id NOT IN ("
+                             + "SELECT DISTINCT ob.company.id FROM OpeningBalance ob WHERE ob.year  = ? AND ob.month = ?"
+                        + ")", year, month);
     }
 
     @Override
@@ -47,6 +59,6 @@ public class CompanyService
 
     @Override
     public List<Object[]> getBasicData() {
-        return dao.listHQL("SELECT c.id,c.name,c.city,c.address FROM Company c WHERE c.active = true");
+        return dao.listHQL("SELECT c.id,c.name,c.city,c.address FROM Company c WHERE c.active = true ORDER BY c.code");
     }
 }
