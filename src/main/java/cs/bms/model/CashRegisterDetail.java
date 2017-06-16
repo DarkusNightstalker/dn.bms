@@ -37,7 +37,7 @@
 /*    */   @Enumerated(EnumType.ORDINAL)
 /*    */   protected CashType cashType;
 /*    */   @Column(name="quantity", nullable=true)
-/* 40 */   protected Integer quantity = Integer.valueOf(0);
+/* 40 */   protected Integer quantity = 0;
 /*    */   
 /*    */ 
 /*    */ 
