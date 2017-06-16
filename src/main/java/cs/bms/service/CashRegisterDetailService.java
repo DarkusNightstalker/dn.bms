@@ -2,6 +2,7 @@ package cs.bms.service;
 
 import cs.bms.dao.interfac.ICashRegisterDetailDao;
 import cs.bms.enumerated.CashType;
+import cs.bms.model.CashRegister;
 import cs.bms.model.CashRegisterDetail;
 import cs.bms.service.interfac.ICashRegisterDetailService;
 import gkfire.hibernate.generic.GenericService;
@@ -50,5 +51,10 @@ public class CashRegisterDetailService extends GenericService<CashRegisterDetail
             total += quantity * type.getValue().doubleValue();
         }
         return new Object[]{map,new BigDecimal(total).setScale(2,RoundingMode.HALF_UP)};
+    }
+
+    @Override
+    public void deleteBy(CashRegister cashRegister) {
+        dao.updateHQL("DELETE FROM CashRegisterDetail crd WHERE crd.cashRegister = ?",cashRegister);
     }
 }

@@ -80,11 +80,11 @@ public class PaymentVoucherService extends GenericService<PaymentVoucher, Long> 
 
         return ((Long) this.dao.getByHQL("SELECT "
                 + "COALESCE(SUM(pv.value),0) "
-                + "FROM PaymentVoucher s WHERE  "
+                + "FROM PaymentVoucher pv WHERE  "
                 + "pv.sale.company = ? AND "
                 + "pv.sale.active = true AND "
                 + "pv.sale.verified = true AND "
-                + "pv.sale.credit = false", new Object[]{company}))
+                + "pv.sale.credit = false", company))
                 .intValue();
     }
 }

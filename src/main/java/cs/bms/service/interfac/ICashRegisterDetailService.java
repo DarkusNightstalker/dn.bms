@@ -1,6 +1,7 @@
 package cs.bms.service.interfac;
 
 import cs.bms.enumerated.CashType;
+import cs.bms.model.CashRegister;
 import cs.bms.model.CashRegisterDetail;
 import gkfire.hibernate.generic.interfac.IGenericService;
 import java.io.Serializable;
@@ -32,4 +33,10 @@ public abstract interface ICashRegisterDetailService extends IGenericService<Cas
      * <code>[1]</code> - <b>Tipo : </b> {@link java.math.BigDecimal} - sumatorial total
      */
     public abstract Object[] getQuantitiesAsMap(Long cashRegisterId);
+
+    /**
+     * Elimina de la base de datos todos los detalles de un cierre de caja especifico
+     * @param cashRegister cierre de caja del que se va a eliminar los detalles
+     */
+    public void deleteBy(CashRegister cashRegister);
 }
