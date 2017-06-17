@@ -7,15 +7,15 @@ import java.util.Date;
 import java.util.List;
 
 public abstract interface ICompanyService
-  extends IGenericService<Company, Integer>
-{
-  public abstract List getDataByList(List paramList);
-  
-  public abstract List<Object[]> getBasicDataNotOpening(int paramInt, Month paramMonth);
-  
-  public abstract List<Object[]> getCreatedByAfterDate(Date paramDate);
-  
-  public abstract List<Object[]> getEditedByAfterDate(Date paramDate, boolean paramBoolean);
+        extends IGenericService<Company, Integer> {
+
+    public abstract List getDataByList(List paramList);
+
+    public abstract List<Object[]> getBasicDataNotOpening(int paramInt, Month paramMonth);
+
+    public abstract List<Object[]> getCreatedByAfterDate(Date paramDate);
+
+    public abstract List<Object[]> getEditedByAfterDate(Date paramDate, boolean paramBoolean);
 
     public List<Object[]> getBasicData();
 }
