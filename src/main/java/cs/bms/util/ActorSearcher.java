@@ -1,17 +1,15 @@
 package cs.bms.util;
 
-import cs.bms.bean.util.PNotifyMessage;
 import cs.bms.model.Actor;
 import cs.bms.util.exception.CaptchaFailedException;
 import cs.bms.util.exception.IdentityException;
+import gkfire.web.bean.AbstractSessionBean;
 import gkfire.web.util.BeanUtil;
 import java.io.Serializable;
 import java.util.Base64;
-import java.util.Base64.Encoder;
 import javax.websocket.SessionException;
 
-public abstract class ActorSearcher
-        implements Serializable {
+public abstract class ActorSearcher  implements Serializable {
 
     protected String identityNumber;
     protected String captcha;
@@ -76,17 +74,17 @@ public abstract class ActorSearcher
                 this.webSearchValid = true;
             }
         } catch (CaptchaFailedException ex) {
-            PNotifyMessage.errorMessage("Texto de imagen incorrecto");
+            errorMessage("Texto de imagen incorrecto");
             this.webSearchValid = false;
             this.captcha = "";
             ex.printStackTrace();
         } catch (IdentityException ex) {
-            PNotifyMessage.errorMessage(ex.getMessage());
+            errorMessage(ex.getMessage());
             this.webSearchValid = true;
             this.actor = null;
             ex.printStackTrace();
         } catch (SessionException ex) {
-            PNotifyMessage.errorMessage("Sesion expirada");
+            errorMessage("Sesion expirada");
             this.webSearchValid = false;
             this.actor = null;
             this.captcha = "";
@@ -95,6 +93,7 @@ public abstract class ActorSearcher
         }
     }
 
+    protected abstract void errorMessage(String message);
     public String getIdentityNumber() {
         return this.identityNumber;
     }
