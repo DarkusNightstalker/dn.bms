@@ -4,6 +4,7 @@ import cs.bms.dao.interfac.IUserDao;
 import cs.bms.model.User;
 import cs.bms.service.interfac.IUserService;
 import cs.bms.util.AESKeys;
+import gkfire.auditory.AuditoryEntity;
 import gkfire.hibernate.generic.GenericService;
 import gkfire.hibernate.generic.interfac.IGenericDao;
 import gkfire.util.AES;
@@ -123,5 +124,10 @@ public class UserService extends GenericService<User, Integer> implements IUserS
                         + "WHERE u_.id = u.id"
                    + ") OR u.superUser = true)", username, AES.encrypt(password, AESKeys.USER_PASSWORD),codePermission)).intValue() != 0;
      
+    }
+
+    @Override
+    public Object[] getCreatedBasicData(AuditoryEntity entity) {
+        return (Object[]) dao.getByHQL("SELECT e.createUser.id,e.createDate FROM "+entity.getClass().getSimpleName()+" e WHERE e.id = ?",entity.getId());
     }
 }

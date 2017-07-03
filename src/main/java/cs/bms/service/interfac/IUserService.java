@@ -1,6 +1,7 @@
 package cs.bms.service.interfac;
 
 import cs.bms.model.User;
+import gkfire.auditory.AuditoryEntity;
 import gkfire.hibernate.generic.interfac.IGenericService;
 import java.io.Serializable;
 import java.util.Date;
@@ -80,5 +81,7 @@ public interface IUserService extends IGenericService<User, Integer> {
      * @return
      */
     public boolean authorize(String username,String password, String codePermission) throws Exception;
+
+    public Object[] getCreatedBasicData(AuditoryEntity entity);
 
 }
