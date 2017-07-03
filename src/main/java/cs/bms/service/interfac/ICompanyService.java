@@ -6,16 +6,17 @@ import gkfire.util.Month;
 import java.util.Date;
 import java.util.List;
 
-public abstract interface ICompanyService
-        extends IGenericService<Company, Integer> {
+public interface ICompanyService extends IGenericService<Company, Integer> {
 
-    public abstract List getDataByList(List paramList);
+    public List getDataByList(List paramList);
 
-    public abstract List<Object[]> getBasicDataNotOpening(int paramInt, Month paramMonth);
+    public List<Object[]> getBasicDataNotOpening(int paramInt, Month paramMonth);
 
-    public abstract List<Object[]> getCreatedByAfterDate(Date paramDate);
+    public List<Object[]> getCreatedByAfterDate(Date paramDate);
 
-    public abstract List<Object[]> getEditedByAfterDate(Date paramDate, boolean paramBoolean);
+    public List<Object[]> getEditedByAfterDate(Date paramDate, boolean paramBoolean);
+
+    public Company getByCode(String code);
 
     public List<Object[]> getBasicData();
 }

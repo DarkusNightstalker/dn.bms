@@ -10,15 +10,17 @@ import java.util.Date;
 import java.util.List;
 
 public abstract interface IProductSalePriceService
-  extends IGenericService<ProductSalePrice, Long>
-{
-  public abstract List<Object[]> getBasicDataByCompanyProduct(Company paramCompany, Product paramProduct);
-  
-  public abstract void deleteByCompanyProduct(Company paramCompany, Product paramProduct);
-  
-  public abstract void saveForGroup(BigDecimal paramBigDecimal, Integer paramInteger, Company paramCompany, Product paramProduct, User paramUser);
-  
-  public abstract List<Object[]> getCreatedByAfterDate(Date paramDate, String paramString);
+        extends IGenericService<ProductSalePrice, Long> {
+
+    public abstract List<Object[]> getBasicDataByCompanyProduct(Company paramCompany, Product paramProduct);
+
+    public abstract void deleteByCompanyProduct(Company paramCompany, Product paramProduct);
+
+    public abstract void saveForGroup(BigDecimal price, Integer quantity, Company currentCompany, Product selected, User user);
+
+    public abstract List<Object[]> getCreatedByAfterDate(Date paramDate, String paramString);
+
+    public BigDecimal getBasicPrice(Company currentCompany, Product product);
 }
 
 

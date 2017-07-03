@@ -2,7 +2,9 @@
 /*    */ 
 /*    */ import cs.bms.dao.interfac.IProductDao;
 /*    */ import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 /*    */ 
+@Repository
 /*    */ public class ProductDao extends gkfire.hibernate.generic.GenericDao<cs.bms.model.Product, Long> implements IProductDao
 /*    */ {
 /*    */   public boolean existBarCode(String code, Long exception)

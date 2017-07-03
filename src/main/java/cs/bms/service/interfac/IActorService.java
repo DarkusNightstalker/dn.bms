@@ -6,30 +6,103 @@ import gkfire.hibernate.generic.interfac.IGenericService;
 import java.util.Date;
 import java.util.List;
 
-public abstract interface IActorService
-  extends IGenericService<Actor, Long>
-{
-  public abstract void updateNameByIdentityDocument(String paramString1, String paramString2);
-  
-  public abstract List<Object[]> getIdentityDataForSynchro(String... paramVarArgs);
-  
-  public abstract Long countIdentityDataForSynchro(String... paramVarArgs);
-  
-  public abstract Actor getByIdentityNumber(String paramString);
-  
-  public abstract boolean verifyIdentityNumber(String paramString, Long paramLong);
-  
-  public abstract List<Object[]> getCreatedByAfterDate(Date paramDate);
-  
-  public abstract List<Object[]> getEditedByAfterDate(Date paramDate, boolean paramBoolean);
-  
-  public abstract void subtractPoints(Long paramLong1, Long paramLong2, User paramUser);
-  
-  public abstract void addPoints(Long paramLong1, Long paramLong2, User paramUser);
-}
-
-
-/* Location:              D:\Proyectos\cs.bms.minisol.web-1.0.1\WEB-INF\lib\cs.bms-1.0.jar!\cs\bms\service\interfac\IActorService.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       0.7.1
+/**
+ *
+ * @author Darkus Nightmare
  */
+public abstract interface IActorService extends IGenericService<Actor, Long> {
+
+    /**
+     *
+     * @param identityNumber
+     * @param name
+     */
+    public abstract void updateNameByIdentityDocument(String identityNumber, String name);
+
+    /**
+     *
+     * @param identityDocumentCodes
+     * @return
+     */
+    public abstract List<Object[]> getIdentityDataForSynchro(String... identityDocumentCodes);
+
+    /**
+     *
+     * @param identityDocumentCodes
+     * @return
+     */
+    public abstract Long countIdentityDataForSynchro(String... identityDocumentCodes);
+
+    /**
+     *
+     * @param identityNumber
+     * @return
+     */
+    public abstract Actor getByIdentityNumber(String identityNumber);
+
+    /**
+     *
+     * @param identityNumber
+     * @param id
+     * @return
+     */
+    public abstract boolean verifyIdentityNumber(String identityNumber, Long id);
+
+    /**
+     *
+     * @param date
+     * @return
+     */
+    public abstract List<Object[]> getCreatedByAfterDate(Date date);
+
+    /**
+     *
+     * @param date
+     * @param withRecentlyCreated
+     * @return
+     */
+    public abstract List<Object[]> getEditedByAfterDate(Date date, boolean withRecentlyCreated);
+
+    /**
+     *
+     * @param id
+     * @param points
+     * @param user
+     */
+    public abstract void subtractPoints(Long id, Long points, User user);
+
+    /**
+     *
+     * @param id
+     * @param points
+     * @param user
+     */
+    public abstract void addPoints(Long id, Long points, User user);
+
+    /**
+     *
+     * @param identityNumber
+     * @return
+     */
+    public abstract Long getIdByIdentityNumber(String identityNumber);
+
+    /**
+     *
+     * @param quantity
+     * @param query
+     * @return
+     */
+    public List<Object[]> forAutocomplete(Integer quantity,String query);
+
+    /**
+     *
+     * @param quantity
+     * @param query
+     * @return
+     */
+    public List<Object[]> forSupplierAutocomplete(Integer quantity,String query);
+    
+    public Long countNotUploaded();
+
+    public void completeUploaded();
+}

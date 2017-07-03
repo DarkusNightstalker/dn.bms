@@ -3,7 +3,9 @@ package cs.bms.dao;
 import cs.bms.dao.interfac.IProductCostPriceDao;
 import cs.bms.model.ProductCostPrice;
 import gkfire.hibernate.generic.GenericDao;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ProductCostPriceDao
   extends GenericDao<ProductCostPrice, Long>
   implements IProductCostPriceDao

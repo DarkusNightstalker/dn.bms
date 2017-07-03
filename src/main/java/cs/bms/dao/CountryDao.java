@@ -3,7 +3,9 @@ package cs.bms.dao;
 import cs.bms.dao.interfac.ICountryDao;
 import cs.bms.model.Country;
 import gkfire.hibernate.generic.GenericDao;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class CountryDao
   extends GenericDao<Country, Integer>
   implements ICountryDao

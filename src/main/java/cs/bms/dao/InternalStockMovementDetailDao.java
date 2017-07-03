@@ -3,7 +3,9 @@ package cs.bms.dao;
 import cs.bms.dao.interfac.IInternalStockMovementDetailDao;
 import cs.bms.model.InternalStockMovementDetail;
 import gkfire.hibernate.generic.GenericDao;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class InternalStockMovementDetailDao
   extends GenericDao<InternalStockMovementDetail, Long>
   implements IInternalStockMovementDetailDao

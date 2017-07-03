@@ -6,12 +6,14 @@
 /*    */ import org.hibernate.Query;
 /*    */ import org.hibernate.Session;
 /*    */ import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 /*    */ 
 /*    */ 
 /*    */ 
 /*    */ 
 /*    */ 
 /*    */ 
+@Repository("uomDao")
 /*    */ public class UoMDao
 /*    */   extends GenericDao<UoM, Integer>
 /*    */   implements IUoMDao

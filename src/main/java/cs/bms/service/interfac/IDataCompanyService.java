@@ -2,13 +2,27 @@ package cs.bms.service.interfac;
 
 import cs.bms.model.DataCompany;
 import gkfire.hibernate.generic.interfac.IGenericService;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Date;
 
-public abstract interface IDataCompanyService
-  extends IGenericService<DataCompany, Long>
-{}
+public interface IDataCompanyService extends IGenericService<DataCompany, Integer> {
 
+    public String getStringValue(String propertyName) throws IOException, ClassNotFoundException;
 
-/* Location:              D:\Proyectos\cs.bms.minisol.web-1.0.1\WEB-INF\lib\cs.bms-1.0.jar!\cs\bms\service\interfac\IDataCompanyService.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       0.7.1
- */
+    public Integer getIntValue(String propertyName) throws IOException, ClassNotFoundException;
+
+    public Long getLongValue(String propertyName) throws IOException, ClassNotFoundException;
+
+    public Double getDoubleValue(String propertyName) throws IOException, ClassNotFoundException;
+
+    public BigDecimal getBigDecimalValue(String propertyName) throws IOException, ClassNotFoundException;
+
+    public Date getDateValue(String propertyName) throws IOException, ClassNotFoundException;
+
+    public Object getValue(String propertyName) throws IOException, ClassNotFoundException;
+
+    public void saveOrUpdate(String propertyName, Object value) throws IOException, ClassNotFoundException;
+
+    public Boolean getBooleanValue(String propertyName)  throws IOException, ClassNotFoundException;
+}

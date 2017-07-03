@@ -6,12 +6,14 @@ import cs.bms.model.Sale;
 import gkfire.hibernate.generic.GenericDao;
 import java.util.List;
 import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  * Implementación DAO para el modelo SALE
  *
  * @author Darkus Nightmare
  */
+@Repository
 public class SaleDao extends GenericDao<Sale, Long> implements ISaleDao {
 
     @Override

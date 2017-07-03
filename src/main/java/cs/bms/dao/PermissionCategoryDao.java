@@ -3,7 +3,9 @@ package cs.bms.dao;
 import cs.bms.dao.interfac.IPermissionCategoryDao;
 import cs.bms.model.PermissionCategory;
 import gkfire.hibernate.generic.GenericDao;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class PermissionCategoryDao
   extends GenericDao<PermissionCategory, Integer>
   implements IPermissionCategoryDao

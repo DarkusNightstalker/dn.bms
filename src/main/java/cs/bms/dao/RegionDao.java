@@ -3,7 +3,9 @@ package cs.bms.dao;
 import cs.bms.dao.interfac.IRegionDao;
 import cs.bms.model.Region;
 import gkfire.hibernate.generic.GenericDao;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class RegionDao
   extends GenericDao<Region, Integer>
   implements IRegionDao

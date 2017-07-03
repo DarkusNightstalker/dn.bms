@@ -3,7 +3,9 @@ package cs.bms.dao;
 import cs.bms.dao.interfac.ISellerDao;
 import cs.bms.model.Seller;
 import gkfire.hibernate.generic.GenericDao;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class SellerDao
   extends GenericDao<Seller, Long>
   implements ISellerDao

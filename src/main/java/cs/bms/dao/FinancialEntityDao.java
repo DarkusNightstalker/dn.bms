@@ -3,7 +3,9 @@ package cs.bms.dao;
 import cs.bms.dao.interfac.IFinancialEntityDao;
 import cs.bms.model.FinancialEntity;
 import gkfire.hibernate.generic.GenericDao;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class FinancialEntityDao
   extends GenericDao<FinancialEntity, Short>
   implements IFinancialEntityDao

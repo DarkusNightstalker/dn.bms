@@ -13,11 +13,13 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 /**
  * Implementación SERVICE para el modelo PAYMENT VOUCHER
  * @author Darkus Nightmare
  */
+@Service
 public class PaymentVoucherService extends GenericService<PaymentVoucher, Long> implements IPaymentVoucherService {
 
     @Autowired

@@ -6,12 +6,14 @@
 /*    */ import org.hibernate.Query;
 /*    */ import org.hibernate.Session;
 /*    */ import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 /*    */ 
 /*    */ 
 /*    */ 
 /*    */ 
 /*    */ 
 /*    */ 
+@Repository
 /*    */ public class RolDao
 /*    */   extends GenericDao<Rol, Integer>
 /*    */   implements IRolDao

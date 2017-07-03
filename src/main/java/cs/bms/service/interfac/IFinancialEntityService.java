@@ -3,10 +3,9 @@ package cs.bms.service.interfac;
 import cs.bms.model.FinancialEntity;
 import gkfire.hibernate.generic.interfac.IGenericService;
 
-public abstract interface IFinancialEntityService
-  extends IGenericService<FinancialEntity, Short>
-{
-  public abstract boolean verifyCode(String paramString, Short paramShort);
+public interface IFinancialEntityService extends IGenericService<FinancialEntity, Short> {
+
+    public abstract boolean verifyCode(String paramString, Short paramShort);
 }
 
 

@@ -6,12 +6,14 @@
 /*    */ import org.hibernate.Query;
 /*    */ import org.hibernate.Session;
 /*    */ import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 /*    */ 
 /*    */ 
 /*    */ 
 /*    */ 
 /*    */ 
 /*    */ 
+@Repository
 /*    */ public class ProductLineDao
 /*    */   extends GenericDao<ProductLine, Integer>
 /*    */   implements IProductLineDao

@@ -3,7 +3,9 @@ package cs.bms.dao;
 import cs.bms.dao.interfac.ISpecialPermissionDao;
 import cs.bms.model.SpecialPermission;
 import gkfire.hibernate.generic.GenericDao;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class SpecialPermissionDao
   extends GenericDao<SpecialPermission, Short>
   implements ISpecialPermissionDao

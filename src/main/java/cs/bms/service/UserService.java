@@ -3,6 +3,7 @@ package cs.bms.service;
 import cs.bms.dao.interfac.IUserDao;
 import cs.bms.model.User;
 import cs.bms.service.interfac.IUserService;
+import cs.bms.util.AESKeys;
 import gkfire.hibernate.generic.GenericService;
 import gkfire.hibernate.generic.interfac.IGenericDao;
 import gkfire.util.AES;
@@ -11,7 +12,9 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserService extends GenericService<User, Integer> implements IUserService {
 
     @Autowired
@@ -19,15 +22,10 @@ public class UserService extends GenericService<User, Integer> implements IUserS
     private IUserDao dao;
 
     @Override
-    public User login(String username, String password)
-            throws Exception {
+    public User login(String username, String password)  throws Exception {
         return this.dao.login(username, password);
     }
 
-    @Override
-    public Integer getNextId() {
-        return this.dao.getNextId();
-    }
 
     @Override
     public boolean existUsername(String username, Integer id) {
@@ -41,27 +39,89 @@ public class UserService extends GenericService<User, Integer> implements IUserS
 
     @Override
     public String getCreatorUsername(Class clazz, Serializable id) {
-        return (String) this.dao.getByHQL("SELECT e.createUser.username FROM " + clazz.getSimpleName() + " e WHERE e.id = ?", new Object[]{id});
+        return (String) this.dao.getByHQL(""
+                + "SELECT "
+                    + "e.createUser.username "
+                + "FROM " + clazz.getSimpleName() + " e "
+                + "WHERE e.id = ?", id);
     }
 
     @Override
     public User getCreator(Class clazz, Serializable id) {
-        return (User) this.dao.getByHQL("SELECT e.createUser FROM " + clazz.getSimpleName() + " e WHERE e.id = ?", new Object[]{id});
+        return (User) this.dao.getByHQL(""
+                + "SELECT "
+                    + "e.createUser "
+                + "FROM " + clazz.getSimpleName() + " e "
+                + "WHERE e.id = ?", id);
     }
 
     @Override
-    public boolean verifyAuthenthication(String username, String password)
-            throws Exception {
-        return this.dao.getByHQL("SELECT 1 FROM User u WHERE u.username LIKE ? AND u.password LIKE ?", new Object[]{username, AES.encrypt(password, "AyfCIx53fTEuRuYU")}) != null;
+    public boolean verifyAuthenthication(String username, String password) throws Exception {
+        return this.dao.getByHQL(""
+                + "SELECT "
+                    + "1 "
+                + "FROM User u "
+                + "WHERE "
+                    + "u.username LIKE ? AND "
+                    + "u.password LIKE ? AND u.active = true", username, AES.encrypt(password, AESKeys.USER_PASSWORD)) != null;
     }
 
     @Override
-    public List<Object[]> getCreateByAfterDate(Date paramDate, String paramString) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Object[]> getCreateByAfterDate(Date date, String paramString) {
+        return this.dao.listHQL(""
+                + "SELECT "
+                    + "u.id,"
+                    + "u.username,"
+                    + "u.password,"
+                    + "u.lastLogin,"
+                    + "u.superUser,"
+                    + "u.employee.id,"
+                    + "u.employee.identityNumber,"
+                    + "u.active,"
+                    + "u.createUser.id,"
+                    + "u.createDate "
+                + "FROM User u "
+                + "WHERE u.createDate > ?", date);
     }
 
     @Override
-    public List<Object[]> getEditedByAfterDate(Date paramDate, String paramString, boolean paramBoolean) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Object[]> getEditedByAfterDate(Date date, String companyCode, boolean b) {
+         return this.dao.listHQL(""
+                + "SELECT "
+                    + "u.id,"
+                    + "u.username,"
+                    + "u.password,"
+                    + "u.lastLogin,"
+                    + "u.superUser,"
+                    + "u.employee.id,"
+                    + "u.employee.identityNumber,"
+                    + "u.active,"
+                    + "u.createUser.id,"
+                    + "u.createDate,"
+                    + "u.editUser.id,"
+                    + "u.editDate "
+                + "FROM User u "
+                + "WHERE u.createDate < ? AND u.editDate > ?", date,date);
+    }
+
+    @Override
+    public boolean authorize(String username,String password, String codePermission) throws Exception{
+           return ((Number)this.dao.getByHQL(""
+                + "SELECT "
+                    + "COUNT(u.id) "
+                + "FROM User u  "
+                + "WHERE "
+                    + "u.username LIKE ? AND "
+                    + "u.password LIKE ? AND "
+                    + "u.active = true AND "
+                    + "(? IN ("
+                        + "SELECT "
+                            + "p.code "
+                        + "FROM User u_  "
+                            + "join u_.rols r "
+                            + "join r.permissions p "
+                        + "WHERE u_.id = u.id"
+                   + ") OR u.superUser = true)", username, AES.encrypt(password, AESKeys.USER_PASSWORD),codePermission)).intValue() != 0;
+     
     }
 }

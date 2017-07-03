@@ -3,7 +3,9 @@ package cs.bms.dao;
 import cs.bms.dao.interfac.IIdentityDocumentDao;
 import cs.bms.model.IdentityDocument;
 import gkfire.hibernate.generic.GenericDao;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class IdentityDocumentDao
   extends GenericDao<IdentityDocument, Short>
   implements IIdentityDocumentDao

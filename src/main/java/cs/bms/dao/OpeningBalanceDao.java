@@ -3,7 +3,9 @@ package cs.bms.dao;
 import cs.bms.dao.interfac.IOpeningBalanceDao;
 import cs.bms.model.OpeningBalance;
 import gkfire.hibernate.generic.GenericDao;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class OpeningBalanceDao
   extends GenericDao<OpeningBalance, Long>
   implements IOpeningBalanceDao

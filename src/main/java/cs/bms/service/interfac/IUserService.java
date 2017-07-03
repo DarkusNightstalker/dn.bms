@@ -6,30 +6,79 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public abstract interface IUserService
-  extends IGenericService<User, Integer>
-{
-  public abstract User login(String paramString1, String paramString2)
-    throws Exception;
-  
-  public abstract Integer getNextId();
-  
-  public abstract boolean existUsername(String paramString, Integer paramInteger);
-  
-  public abstract String getCreatorUsername(Class paramClass, Serializable paramSerializable);
-  
-  public abstract User getCreator(Class paramClass, Serializable paramSerializable);
-  
-  public abstract boolean verifyAuthenthication(String paramString1, String paramString2)
-    throws Exception;
-  
-  public abstract List<Object[]> getCreateByAfterDate(Date paramDate, String paramString);
-  
-  public abstract List<Object[]> getEditedByAfterDate(Date paramDate, String paramString, boolean paramBoolean);
-}
-
-
-/* Location:              D:\Proyectos\cs.bms.minisol.web-1.0.1\WEB-INF\lib\cs.bms-1.0.jar!\cs\bms\service\interfac\IUserService.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       0.7.1
+/**
+ *
+ * @author Darkus Nightmare
+ * @version 1.0
  */
+public interface IUserService extends IGenericService<User, Integer> {
+
+    /**
+     *
+     * @param username
+     * @param password
+     * @return
+     * @throws Exception
+     */
+    public User login(String username, String password) throws Exception;
+
+    /**
+     *
+     * @param username
+     * @param exception
+     * @return
+     */
+    public boolean existUsername(String username, Integer exception);
+
+    /**
+     *
+     * @param class_
+     * @param id
+     * @return
+     */
+    public String getCreatorUsername(Class class_, Serializable id);
+
+    /**
+     *
+     * @param class_
+     * @param id
+     * @return
+     */
+    public User getCreator(Class class_, Serializable id);
+
+    /**
+     *
+     * @param username
+     * @param password
+     * @return
+     * @throws Exception
+     */
+    public boolean verifyAuthenthication(String username, String password) throws Exception;
+
+    /**
+     *
+     * @param date
+     * @param companyCode
+     * @return
+     */
+    public List<Object[]> getCreateByAfterDate(Date date, String companyCode);
+
+    /**
+     *
+     * @param date
+     * @param companyCode
+     * @param b
+     * @return
+     */
+    public List<Object[]> getEditedByAfterDate(Date date, String companyCode, boolean b);
+
+    /**
+     *
+     * @param username
+     * @param password
+     * @param codePermission
+     * @return
+     */
+    public boolean authorize(String username,String password, String codePermission) throws Exception;
+
+}

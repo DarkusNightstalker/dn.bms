@@ -3,7 +3,9 @@ package cs.bms.dao;
 import cs.bms.dao.interfac.IPurchaseReportDao;
 import cs.bms.model.Purchase;
 import gkfire.hibernate.generic.GenericDao;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class PurchaseReportDao
   extends GenericDao<Purchase, Long>
   implements IPurchaseReportDao

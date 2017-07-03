@@ -3,7 +3,9 @@ package cs.bms.dao;
 import cs.bms.dao.interfac.ISaleDetailDao;
 import cs.bms.model.SaleDetail;
 import gkfire.hibernate.generic.GenericDao;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class SaleDetailDao
   extends GenericDao<SaleDetail, Long>
   implements ISaleDetailDao

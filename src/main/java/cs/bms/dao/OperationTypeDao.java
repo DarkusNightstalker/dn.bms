@@ -3,7 +3,9 @@ package cs.bms.dao;
 import cs.bms.dao.interfac.IOperationTypeDao;
 import cs.bms.model.OperationType;
 import gkfire.hibernate.generic.GenericDao;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class OperationTypeDao
   extends GenericDao<OperationType, Short>
   implements IOperationTypeDao

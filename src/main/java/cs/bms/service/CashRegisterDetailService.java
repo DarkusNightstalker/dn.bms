@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 /**
  * Implementación SERVICE para el modelo CASH REGISTER DETAIL
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
  * @author Darkus Nightmare
  * @version  1.0
  */
+@Service
 public class CashRegisterDetailService extends GenericService<CashRegisterDetail, Serializable> implements ICashRegisterDetailService {
 
     @Autowired

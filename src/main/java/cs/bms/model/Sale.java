@@ -82,6 +82,13 @@ public class Sale implements AuditoryEntity<Long, User>, EntityActivate {
      */
     @Column(name = "points")
     private Long points = 0L;
+    /**
+     * Puntos del cliente a la hora de hacer esta venta
+     */
+    @Column(name = "customer_points")
+    private Long customerPoints;
+    @Column(name = "spend_points")
+    private Integer spendPoints;
     @Column(name = "subtotal", nullable = false)
     private BigDecimal subtotal = BigDecimal.ZERO;
     @Column(name = "igv", nullable = false)
@@ -98,6 +105,9 @@ public class Sale implements AuditoryEntity<Long, User>, EntityActivate {
     @Column(name = "date_issue", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateIssue;
+    @Column(name = "date_due", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date dateDue;
 
     @JoinColumn(name = "create_uid", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
@@ -337,5 +347,47 @@ public class Sale implements AuditoryEntity<Long, User>, EntityActivate {
      */
     public void setCredit(Boolean credit) {
         this.credit = credit;
+    }
+
+    /**
+     * @return the dateDue
+     */
+    public Date getDateDue() {
+        return dateDue;
+    }
+
+    /**
+     * @param dateDue the dateDue to set
+     */
+    public void setDateDue(Date dateDue) {
+        this.dateDue = dateDue;
+    }
+
+    /**
+     * @return the customerPoints
+     */
+    public Long getCustomerPoints() {
+        return customerPoints;
+    }
+
+    /**
+     * @param customerPoints the customerPoints to set
+     */
+    public void setCustomerPoints(Long customerPoints) {
+        this.customerPoints = customerPoints;
+    }
+
+    /**
+     * @return the spendPoints
+     */
+    public Integer getSpendPoints() {
+        return spendPoints;
+    }
+
+    /**
+     * @param spendPoints the spendPoints to set
+     */
+    public void setSpendPoints(Integer spendPoints) {
+        this.spendPoints = spendPoints;
     }
 }

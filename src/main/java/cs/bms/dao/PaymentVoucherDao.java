@@ -3,7 +3,9 @@ package cs.bms.dao;
 import cs.bms.dao.interfac.IPaymentVoucherDao;
 import cs.bms.model.PaymentVoucher;
 import gkfire.hibernate.generic.GenericDao;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class PaymentVoucherDao
   extends GenericDao<PaymentVoucher, Long>
   implements IPaymentVoucherDao

@@ -27,12 +27,33 @@ public class RolService extends GenericService<Rol, Integer> implements IRolServ
     }
 
     @Override
-    public List<Object[]> getCreateByAfterDate(Date paramDate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Object[]> getCreateByAfterDate(Date date) {
+        return this.dao.listHQL(""
+                + "SELECT "
+                    + "r.id,"
+                    + "r.name,"
+                    + "r.active,"
+                    + "r.createUser.id,"
+                    + "r.createDate "
+                + "FROM Rol r "
+                + "WHERE r.createDate > ?", date);        
     }
 
     @Override
-    public List<Object[]> getEditedByAfterDate(Date paramDate, boolean paramBoolean) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Object[]> getEditedByAfterDate(Date date, boolean b) {
+        return this.dao.listHQL(""
+                + "SELECT "
+                    + "r.id,"
+                    + "r.name,"
+                    + "r.active,"
+                    + "r.createUser.id,"
+                    + "r.createDate,"
+                    + "r.editUser.id,"
+                    + "r.editDate "
+                + "FROM Rol r "
+                + "WHERE "
+                    + "a.createDate < ? AND "
+                    + "a.editDate > ?", date, date);
+    
     }
 }

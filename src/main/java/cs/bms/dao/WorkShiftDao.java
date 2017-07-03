@@ -3,7 +3,9 @@ package cs.bms.dao;
 import cs.bms.dao.interfac.IWorkShiftDao;
 import cs.bms.model.WorkShift;
 import gkfire.hibernate.generic.GenericDao;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class WorkShiftDao
   extends GenericDao<WorkShift, Integer>
   implements IWorkShiftDao

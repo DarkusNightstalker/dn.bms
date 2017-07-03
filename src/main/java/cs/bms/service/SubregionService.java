@@ -7,6 +7,7 @@
 /*    */ import gkfire.hibernate.generic.interfac.IGenericDao;
 /*    */ import org.springframework.beans.factory.annotation.Autowired;
 /*    */ import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 /*    */ 
 /*    */ 
 /*    */ 
@@ -15,6 +16,7 @@
 /*    */ 
 /*    */ 
 /*    */ 
+@Service
 /*    */ public class SubregionService
 /*    */   extends GenericService<Subregion, Integer>
 /*    */   implements ISubregionService

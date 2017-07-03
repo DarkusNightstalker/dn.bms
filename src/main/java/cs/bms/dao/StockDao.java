@@ -3,7 +3,9 @@ package cs.bms.dao;
 import cs.bms.dao.interfac.IStockDao;
 import cs.bms.model.Stock;
 import gkfire.hibernate.generic.GenericDao;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class StockDao
   extends GenericDao<Stock, Long>
   implements IStockDao

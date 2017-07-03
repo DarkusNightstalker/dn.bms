@@ -8,12 +8,14 @@
 /*    */ import org.hibernate.Query;
 /*    */ import org.hibernate.Session;
 /*    */ import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 /*    */ 
 /*    */ 
 /*    */ 
 /*    */ 
 /*    */ 
 /*    */ 
+@Repository
 /*    */ public class DocumentNumberingDao
 /*    */   extends GenericDao<DocumentNumbering, Integer>
 /*    */   implements IDocumentNumberingDao

@@ -50,4 +50,14 @@ public interface ISaleService extends IGenericService<Sale, Long> {
      * @param id identificador univo del registro
      */
     public abstract void updateDiscount(BigDecimal discount, Long id);
+
+    /**
+     *
+     * @param points
+     * @param id
+     */
+    public void subtractCustomerPointsDiscount(long points, Long id);
+
+    public void clean() throws Exception;
+
 }
