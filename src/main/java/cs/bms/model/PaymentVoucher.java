@@ -1,6 +1,7 @@
 package cs.bms.model;
 
 import gkfire.auditory.AuditoryEntity;
+import gkfire.model.interfac.EntityActivate;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,35 +19,36 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "payment_voucher", catalog = "public")
 @XmlRootElement
-public class PaymentVoucher
-        implements AuditoryEntity<Long, User> {
+public class PaymentVoucher  implements AuditoryEntity<Long, User>,EntityActivate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    protected Long id;
+    private Long id;
     @Column(name = "\"value\"", nullable = false)
-    protected Integer value;
+    private Integer value;
     @Column(name = "numeration", nullable = false)
-    protected String numeration;
+    private String numeration;
     @Column(name = "date_expiry", nullable = false)
     @Temporal(TemporalType.DATE)
-    protected Date dateExpiry;
+    private Date dateExpiry;
     @JoinColumn(name = "id_sale")
     @ManyToOne
-    protected Sale sale;
+    private Sale sale;
     @JoinColumn(name = "create_uid", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
-    protected User createUser;
+    private User createUser;
     @Column(name = "create_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    protected Date createDate;
+    private Date createDate;
     @JoinColumn(name = "edit_uid")
     @ManyToOne(fetch = FetchType.LAZY)
-    protected User editUser;
+    private User editUser;
     @Column(name = "edit_date")
     @Temporal(TemporalType.TIMESTAMP)
-    protected Date editDate;
+    private Date editDate;
+    @Column(name = "active", nullable = false)
+    private Boolean active = Boolean.TRUE;
 
     @Override
     public Long getId() {
@@ -128,5 +130,19 @@ public class PaymentVoucher
     @Override
     public void setEditDate(Date editDate) {
         this.editDate = editDate;
+    }
+
+    /**
+     * @return the active
+     */
+    public Boolean getActive() {
+        return active;
+    }
+
+    /**
+     * @param active the active to set
+     */
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

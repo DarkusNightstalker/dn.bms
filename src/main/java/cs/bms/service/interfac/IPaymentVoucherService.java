@@ -3,6 +3,7 @@ package cs.bms.service.interfac;
 import cs.bms.model.CashRegister;
 import cs.bms.model.Company;
 import cs.bms.model.PaymentVoucher;
+import cs.bms.model.User;
 import gkfire.hibernate.generic.interfac.IGenericService;
 import java.util.Date;
 import java.util.List;
@@ -63,8 +64,9 @@ public interface IPaymentVoucherService extends IGenericService<PaymentVoucher, 
      * 
      * @param code codigo de vale de consumo
      * @param saleId identifiador único de la venta
+     * @param user
      */
-    public void useVoucher(String code, Long saleId);
+    public void useVoucher(String code, Long saleId,User user);
 
     /**
      * Obtiene la suma de todos los valores de los vouchers registrados desde un momento especifico en adelante en una sede

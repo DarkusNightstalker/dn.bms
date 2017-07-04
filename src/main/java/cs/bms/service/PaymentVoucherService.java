@@ -5,6 +5,7 @@ import cs.bms.model.CashRegister;
 import cs.bms.model.Company;
 import cs.bms.model.PaymentVoucher;
 import cs.bms.model.Sale;
+import cs.bms.model.User;
 import cs.bms.service.interfac.IPaymentVoucherService;
 import gkfire.hibernate.generic.GenericService;
 import gkfire.hibernate.generic.interfac.IGenericDao;
@@ -38,7 +39,12 @@ public class PaymentVoucherService extends GenericService<PaymentVoucher, Long> 
 
     @Override
     public Long getNextNumerationByPrefix(String prefix) {
-        List result = this.dao.listHQLPage("SELECT pv.numeration FROM PaymentVoucher pv WHERE pv.numeration LIKE ? ORDER BY  numeration_format(pv.numeration,?) DESC", 1, 1, prefix + "%",prefix);
+        List result = this.dao.listHQLPage(""
+                + "SELECT "
+                    + "pv.numeration "
+                + "FROM PaymentVoucher pv "
+                + "WHERE pv.numeration LIKE ? "
+                + "ORDER BY numeration_format(pv.numeration,?) DESC", 1, 1, prefix + "%",prefix);
         if (result.isEmpty()) {
             return 1L;
         }
@@ -47,46 +53,70 @@ public class PaymentVoucherService extends GenericService<PaymentVoucher, Long> 
 
     @Override
     public boolean verifyNumeration(String code) {
-        return this.dao.getByHQL("SELECT 1 FROM PaymentVoucher pv WHERE pv.sale is not null AND pv.numeration LIKE ?", code) != null;
+        return this.dao.getByHQL(""
+                + "SELECT "
+                    + "1 "
+                + "FROM PaymentVoucher pv "
+                + "WHERE "
+                    + "pv.sale is not null AND "
+                    + "pv.active = true AND "
+                    + "pv.numeration LIKE ?", code) != null;
     }
 
     @Override
     public boolean existNumeration(String code) {
-        return this.dao.getByHQL("SELECT 1 FROM PaymentVoucher pv WHERE pv.numeration LIKE ?", code) != null;
+        return this.dao.getByHQL(""
+                + "SELECT "
+                    + "1 "
+                + "FROM PaymentVoucher pv "
+                + "WHERE pv.numeration LIKE ?", code) != null;
     }
 
     @Override
     public Integer getValueByCode(String code) {
-        return (Integer) this.dao.getByHQL("SELECT pv.value FROM PaymentVoucher pv WHERE pv.numeration LIKE ?",code);
+        return (Integer) this.dao.getByHQL(""
+                + "SELECT "
+                    + "pv.value "
+                + "FROM PaymentVoucher pv "
+                + "WHERE pv.numeration LIKE ?",code);
     }
 
     @Override
-    public void useVoucher(String code, Long saleId) {
-        this.dao.updateHQL("UPDATE PaymentVoucher SET sale = ? WHERE numeration like ?", new Sale(saleId), code);
+    public void useVoucher(String code, Long saleId,User user) {
+        this.dao.updateHQL(""
+                + "UPDATE PaymentVoucher "
+                + "SET "
+                    + "sale = ?,"
+                    + "active = false,"
+                    + "editUser = ?,"
+                    + "editDate = ? "
+                + "WHERE numeration like ?", new Sale(saleId), code,user,new Date());
     }
 
     @Override
    public Integer getTotalSumAfterByCompany(Date date, Company company) {
         if (date != null) {
-            return ((Long) this.dao.getByHQL("SELECT "
-                    + "COALESCE(SUM(pv.value),0) "
+            return ((Long) this.dao.getByHQL(""
+                    + "SELECT "
+                        + "COALESCE(SUM(pv.value),0) "
                     + "FROM PaymentVoucher pv "
                     + "WHERE  "
-                    + "pv.sale.company = ? AND "
-                    + "pv.sale.dateIssue > ? AND "
-                    + "pv.sale.active = true AND "
-                    + "pv.sale.verified = true AND "
-                    + "pv.sale.credit = false", company,date))
+                        + "pv.sale.company = ? AND "
+                        + "pv.sale.dateIssue > ? AND "
+                        + "pv.sale.active = true AND "
+                        + "pv.sale.verified = true AND "
+                        + "pv.sale.credit = false", company,date))
                     .intValue();
         }
 
-        return ((Long) this.dao.getByHQL("SELECT "
-                + "COALESCE(SUM(pv.value),0) "
+        return ((Long) this.dao.getByHQL(""
+                + "SELECT "
+                    + "COALESCE(SUM(pv.value),0) "
                 + "FROM PaymentVoucher pv WHERE  "
-                + "pv.sale.company = ? AND "
-                + "pv.sale.active = true AND "
-                + "pv.sale.verified = true AND "
-                + "pv.sale.credit = false", company))
+                    + "pv.sale.company = ? AND "
+                    + "pv.sale.active = true AND "
+                    + "pv.sale.verified = true AND "
+                    + "pv.sale.credit = false", company))
                 .intValue();
     }
 }

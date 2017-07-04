@@ -68,7 +68,7 @@ public class SaleService extends GenericService<Sale, Long> implements ISaleServ
     public void clean() throws Exception {
         dao.updateHQL("DELETE FROM SaleDetail sd");
         dao.updateHQL("DELETE FROM SalePayment sp");
-        dao.updateHQL("UPDATE PaymentVoucher pv SET sale = null,dateExpiry = ? WHERE sale is not null",new Date());        
+        dao.updateHQL("UPDATE PaymentVoucher pv SET sale = null,active = false WHERE sale is not null",new Date());        
         dao.updateHQL("DELETE FROM Sale s");        
     }
 }

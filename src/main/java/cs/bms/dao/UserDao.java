@@ -2,6 +2,7 @@ package cs.bms.dao;
 
 import cs.bms.dao.interfac.IUserDao;
 import cs.bms.model.User;
+import cs.bms.util.AESKeys;
 import gkfire.hibernate.generic.GenericDao;
 import gkfire.util.AES;
 import java.math.BigInteger;
@@ -16,7 +17,7 @@ public class UserDao extends GenericDao<User, Integer> implements IUserDao {
             throws Exception {
         Query query = getSessionFactory().getCurrentSession().createQuery("SELECT u FROM User u WHERE u.username LIKE :username AND u.password LIKE :password");
         query.setString("username", username);
-        query.setString("password", AES.encrypt(password, "AyfCIx53fTEuRuYU"));
+        query.setString("password", AES.encrypt(password, AESKeys.USER_PASSWORD));
         return (User) query.uniqueResult();
     }
 
