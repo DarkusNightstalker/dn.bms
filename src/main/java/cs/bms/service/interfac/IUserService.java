@@ -84,4 +84,6 @@ public interface IUserService extends IGenericService<User, Integer> {
 
     public Object[] getCreatedBasicData(AuditoryEntity entity);
 
+    public Integer getIdByUsername(String username);
+
 }

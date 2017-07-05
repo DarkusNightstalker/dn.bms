@@ -130,4 +130,9 @@ public class UserService extends GenericService<User, Integer> implements IUserS
     public Object[] getCreatedBasicData(AuditoryEntity entity) {
         return (Object[]) dao.getByHQL("SELECT e.createUser.id,e.createDate FROM "+entity.getClass().getSimpleName()+" e WHERE e.id = ?",entity.getId());
     }
+
+    @Override
+    public Integer getIdByUsername(String username) {
+         return (Integer) dao.getByHQL("SELECT u.id FROM User u WHERE u.username = ?",username);
+   }
 }

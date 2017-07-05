@@ -5,7 +5,7 @@ import gkfire.hibernate.generic.interfac.IGenericService;
 import java.util.Date;
 import java.util.List;
 
-public abstract interface IIdentityDocumentService extends IGenericService<IdentityDocument, Short> {
+public interface IIdentityDocumentService extends IGenericService<IdentityDocument, Short> {
 
     /**
      *
@@ -13,13 +13,15 @@ public abstract interface IIdentityDocumentService extends IGenericService<Ident
      * @param paramShort
      * @return
      */
-    public abstract boolean validCode(String paramString, Short paramShort);
+    public boolean validCode(String paramString, Short paramShort);
 
-    public abstract List<Object[]> getBasicData();
+    public List<Object[]> getBasicData();
 
-    public abstract Short getIdByLength(int paramInt);
+    public Short getIdByLength(int paramInt);
 
-    public abstract List<Object[]> getEditedByAfterDate(Date paramDate, boolean paramBoolean);
+    public List<Object[]> getEditedByAfterDate(Date paramDate, boolean paramBoolean);
 
-    public abstract List<Object[]> getCreateByAfterDate(Date paramDate);
+    public List<Object[]> getCreateByAfterDate(Date paramDate);
+
+    public Short getIdByCode(String string);
 }

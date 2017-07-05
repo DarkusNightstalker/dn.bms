@@ -123,4 +123,9 @@ public class CompanyService extends GenericService<Company, Integer> implements 
     public Company getByCode(String code) {
         return (Company) dao.getByHQL("FROM Company c WHERE c.code LIKE ?",code);
     }
+
+    @Override
+    public Integer getIdByCode(String code) {
+        return (Integer) this.dao.getByHQL("SELECT c.id FROM Company c WHERE c.code LIKE ?",code);
+    }
 }

@@ -95,4 +95,9 @@ public class IdentityDocumentService extends GenericService<IdentityDocument, Sh
                     + "idd.createDate < ? AND "
                     + "idd.editDate > ?", new Object[]{date, date});
     }
+
+    @Override
+    public Short getIdByCode(String code) {
+        return (Short) this.dao.getByHQL("SELECT idd.id FROM IdentityDocument idd WHERE idd.code LIKE ?",code);
+    }
 }
