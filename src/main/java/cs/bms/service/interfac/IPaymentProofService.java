@@ -29,7 +29,8 @@ public abstract interface IPaymentProofService extends IGenericService<PaymentPr
 
     /**
      *
-     * @param date
+     * @param init
+     * @param end
      * @return Lista de datos de los comprobantes de pago creados desde la fecha especifica <br/>
      *<b>FORMATO : </b><br/>
      * <code>[0]</code>  - <b>Tipo : </b>{@link java.lang.Short}   - Identificador único de registro<br/>
@@ -44,11 +45,12 @@ public abstract interface IPaymentProofService extends IGenericService<PaymentPr
      * <code>[9]</code>  - <b>Tipo : </b>{@link java.lang.Integer} - Identificador de usuario creador<br/>
      * <code>[10]</code>  - <b>Tipo : </b>{@link java.util.Date}    - Fecha de creación<br/>
      */
-    public abstract List<Object[]> getCreateByAfterDate(Date date);
+    public abstract List<Object[]> getCreateByAfterDate(Date init,Date end);
 
     /**
      *
-     * @param date
+     * @param init
+     * @param end
      * @param withCreateds
      * @return Lista de datos de los comprobantes de pago editados desde la fecha especifica <br/>
      *<b>FORMATO : </b><br/>
@@ -66,7 +68,7 @@ public abstract interface IPaymentProofService extends IGenericService<PaymentPr
      * <code>[11]</code> - <b>Tipo : </b>{@link java.lang.Integer} - Identificador de usuario editor<br/>
      * <code>[12]</code> - <b>Tipo : </b>{@link java.util.Date}    - Ultima fecha de edición<br/>
      */
-    public abstract List<Object[]> getEditedByAfterDate(Date date, boolean withCreateds);
+    public abstract List<Object[]> getEditedByAfterDate(Date init,Date end, boolean withCreateds);
 
     /**
      *

@@ -19,11 +19,22 @@ public class CompanyGroupService
     @Qualifier("companyGroupDao")
     private ICompanyGroupDao dao;
 
+    @Override
     protected IGenericDao<CompanyGroup, Integer> getDao() {
         return this.dao;
     }
 
+    @Override
     public List<Object[]> getBasicData() {
         return this.dao.listHQL("SELECT cg.id,cg.name FROM CompanyGroup cg WHERE cg.active = true");
+    }
+
+    @Override
+    public Integer getIdByName(String name) {
+        return (Integer) dao.getByHQL(""
+                + "SELECT "
+                + "cg.id "
+                + "FROM CompanyGroup cg "
+                + "WHERE cg.name LIKE ?",name);
     }
 }

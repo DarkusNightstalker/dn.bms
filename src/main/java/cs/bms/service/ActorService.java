@@ -82,51 +82,57 @@ public class ActorService extends GenericService<Actor, Long> implements IActorS
     }
 
     @Override
-    public List<Object[]> getCreatedByAfterDate(Date date) {
+    public List<Object[]> getCreatedByAfterDate(Date init,Date end) {
         return this.dao.listHQL(""
                 + "SELECT "
-                    + "a.id,"
-                    + "a.identityNumber,"
-                    + "a.identityDocument.id,"
                     + "a.identityDocument.code,"
+                    + "a.identityNumber,"
                     + "a.name,"
                     + "a.other,"
                     + "a.address,"
-                    + "a.points,"
                     + "a.customer,"
                     + "a.supplier,"
-                    + "a.synchronized,"
-                    + "a.active,"
-                    + "a.createUser.id,"
-                    + "a.createDate "
+                    + "a.points,"
+                    + "a.representative,"
+                    + "a.synchronized_,"
+                    + "u.name,"
+                    + "a.createUser.username,"
+                    + "a.createDate,"
+                    + "e.username,"
+                    + "a.editDate,"
+                    + "a.active "
                 + "FROM Actor a "
-                + "WHERE a.createDate > ?", date);
+                    + "left join a.ubigeo u "
+                    + "left join a.editUser e "
+                + "WHERE a.createDate >= ? AND a.createDate < ?", init,end);
     }
 
     @Override
-    public List<Object[]> getEditedByAfterDate(Date date, boolean withRecentlyCreated) {
+    public List<Object[]> getEditedByAfterDate(Date init,Date end, boolean withRecentlyCreated) {
         return this.dao.listHQL(""
                 + "SELECT "
-                    + "a.id,"
-                    + "a.identityNumber,"
-                    + "a.identityDocument.id,"
                     + "a.identityDocument.code,"
+                    + "a.identityNumber,"
                     + "a.name,"
                     + "a.other,"
                     + "a.address,"
-                    + "a.points,"
                     + "a.customer,"
                     + "a.supplier,"
-                    + "a.synchronized,"
-                    + "a.active,"
-                    + "a.createUser.id,"
+                    + "a.points,"
+                    + "a.representative,"
+                    + "a.synchronized_,"
+                    + "u.name,"
+                    + "a.createUser.username,"
                     + "a.createDate,"
-                    + "a.editUser.id,"
-                    + "a.editDate "
+                    + "e.username,"
+                    + "a.editDate,"
+                    + "a.active "
                 + "FROM Actor a "
+                    + "left join a.ubigeo u "
+                    + "left join a.editUser e "
                 + "WHERE "
-                    + "a.createDate < ? AND "
-                    + "a.editDate > ?", date, date);
+                    + "(a.createDate < ? OR a.createDate >= ?) AND "
+                    + "a.editDate >= ? AND a.editDate < ?", init, end,init,end);
     }
 
     @Override
@@ -202,5 +208,64 @@ public class ActorService extends GenericService<Actor, Long> implements IActorS
     @Override
     public void completeUploaded() {
         dao.updateHQL("UPDATE Actor a SET a.uploaded = ? WHERE a.uploaded = ?",true,false);
+    }
+
+    @Override
+    public List<Object[]> getDataWhenNotUploaded() {
+//     Actor actor = new Actor();
+//                    actor.setId(actorService.getIdByIdentityNumber(item.getString(1)));
+//                    actor.setIdentityDocument(new IdentityDocument(identityDocumentService.getIdByCode(item.getString(0))));
+//                    actor.setIdentityNumber(item.getString(1));
+//                    actor.setName(item.getString(2));
+//                    actor.setOther(item.getString(3));
+//                    actor.setAddress(item.getString(4));
+//                    actor.setCustomer(item.getBoolean(5));
+//                    actor.setSupplier(item.getBoolean(6));
+//                    actor.setPoints(item.getJsonNumber(7).longValue());
+//                    actor.setRepresentative(item.getString(8));
+//                    actor.setSynchronized_(item.getBoolean(9));
+//                    if (item.getJsonNumber(10) != null) {
+//                        actor.setUbigeo(new Ubigeo(item.getJsonNumber(10).intValue()));
+//                    }
+//                    actor.setUploaded(true);
+//                    actor.setCreateUser(new User(userService.getIdByUsername(item.getString(11))));
+//                    actor.setCreateDate(fullDateFormat.parse(item.getString(12)));
+//                    if (item.getJsonNumber(13) != null) {
+//                        actor.setEditUser(new User(userService.getIdByUsername(item.getString(13))));
+//                        actor.setEditDate(new Date());
+//                    }
+        return dao.listHQL(""
+                + "SELECT "
+                    + "a.identityDocument.code,"
+                    + "a.identityNumber,"
+                    + "a.name,"
+                    + "a.other,"
+                    + "a.address,"
+                    + "a.customer,"
+                    + "a.supplier,"
+                    + "a.points,"
+                    + "a.representative,"
+                    + "a.synchronized_,"
+                    + "u.name,"
+                    + "a.createUser.username,"
+                    + "a.createDate,"
+                    + "e.username,"
+                    + "a.editDate,"
+                    + "a.active "
+                + "FROM Actor a "
+                    + "left join a.ubigeo u "
+                    + "left join a.editUser e "
+                + "WHERE a.uploaded = false");
+    }
+
+    @Override
+    public void addPoints(String identityNumber, Long points, User user) {
+         this.dao.updateHQL(""
+                + "UPDATE Actor a "
+                + "SET "
+                    + "points = (points + ?),"
+                    + "editDate = ?,"
+                    + "editUser = ? "
+                + "WHERE identityNumber = ?", points, new Date(), user, identityNumber);
     }
 }

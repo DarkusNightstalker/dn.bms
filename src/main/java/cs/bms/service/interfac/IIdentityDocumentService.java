@@ -19,9 +19,9 @@ public interface IIdentityDocumentService extends IGenericService<IdentityDocume
 
     public Short getIdByLength(int paramInt);
 
-    public List<Object[]> getEditedByAfterDate(Date paramDate, boolean paramBoolean);
-
-    public List<Object[]> getCreateByAfterDate(Date paramDate);
-
     public Short getIdByCode(String string);
+
+    public List getCreateByAfterDate(Date lastUpdate, Date currentDateUpdate);
+
+    public List getEditedByAfterDate(Date lastUpdate, Date currentDateUpdate, boolean b);
 }

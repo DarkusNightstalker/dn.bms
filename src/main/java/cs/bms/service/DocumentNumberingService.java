@@ -30,12 +30,18 @@ public class DocumentNumberingService extends GenericService<DocumentNumbering, 
 
     @Override
     public List<Object[]> getListData() {
-        return this.dao.listHQL("SELECT "
-                + "dn.id,"
-                + "dn.paymentProof.id,"
-                + "dn.rucCompany,"
-                + "dn.serie,"
-                + "dn.numbering,"
-                + "dn.electronic FROM DocumentNumbering dn ");
+        List<Object[]> data = this.dao.listHQL(""
+                + "SELECT "
+                    + "dn.rucCompany,"
+                    + "dn.paymentProof.code,"
+                    + "dn.serie,"
+                    + "dn.numbering,"
+                    + "dn.electronic,"
+                    + "dn.id "
+                + "FROM DocumentNumbering dn ");
+        data.forEach(item ->{
+            item[5] =  dao.listHQL("SELECT u.username FROM DocumentNumbering dn join dn.users u WHERE dn.id = ?",item[5]);
+        });
+        return data;
     }
 }

@@ -67,4 +67,17 @@ public class PurchaseService extends GenericService<Purchase, Long> implements I
         dao.updateHQL("DELETE FROM PurchasePayment pp");
         dao.updateHQL("DELETE FROM Purchase p");
     }
+
+    @Override
+    public Long getIdByDocument(String supplierIdentityNumber, String paymentProofCode, String serie, String documentNumber) {
+        return (Long) dao.getByHQL(""
+                + "SELECT "
+                    + "p.id "
+                + "FROM Purchase p "
+                + "WHERE "
+                    + "p.supplier.identityNumber LIKE ? AND "
+                    + "p.paymentProof.code LIKE ? AND "
+                    + "p.serie LIKE ? AND "
+                    + "p.documentNumber LIKE ?",supplierIdentityNumber,paymentProofCode,serie,documentNumber);
+    }
 }

@@ -90,7 +90,7 @@ public class PaymentVoucherService extends GenericService<PaymentVoucher, Long> 
                     + "active = false,"
                     + "editUser = ?,"
                     + "editDate = ? "
-                + "WHERE numeration like ?", new Sale(saleId), code,user,new Date());
+                + "WHERE numeration like ?", new Sale(saleId), user,new Date(),code);
     }
 
     @Override
@@ -118,5 +118,35 @@ public class PaymentVoucherService extends GenericService<PaymentVoucher, Long> 
                     + "pv.sale.verified = true AND "
                     + "pv.sale.credit = false", company))
                 .intValue();
+    }
+
+    @Override
+    public Long getIdByNumeration(String numeration) {
+        return (Long) dao.getByHQL(""
+                + "SELECT "
+                    + "pv.id "
+                + "FROM PaymentVoucher pv "
+                + "WHERE pv.numeration LIKE ?",numeration);
+    }
+
+    @Override
+    public List<String> getUsedNumerations(Date min, Date max) {
+     return dao.listHQL(""
+            + "SELECT "
+                + "pv.numeration "
+            + "FROM PaymentVoucher pv "
+            + "WHERE "
+            + "(pv.editDate BETWEEN ? AND ?) ",min,max);
+    }
+
+    @Override
+    public void useVoucher(String code, User user) {
+       this.dao.updateHQL(""
+                + "UPDATE PaymentVoucher "
+                + "SET "
+                    + "active = false,"
+                    + "editUser = ?,"
+                    + "editDate = ? "
+                + "WHERE numeration like ?",user,new Date(),code);
     }
 }

@@ -19,15 +19,23 @@ public class ProductLineService
     @Qualifier("productLineDao")
     private IProductLineDao dao;
 
+    @Override
     protected IGenericDao<ProductLine, Integer> getDao() {
         return this.dao;
     }
 
+    @Override
     public boolean existPath(String path, Integer exception) {
         return this.dao.existPath(path, exception);
     }
 
+    @Override
     public List<Object[]> getBasicData() {
         return this.dao.listHQL("SELECT pl.id,UPPER(pl.path) FROM ProductLine pl where pl.active = true");
+    }
+
+    @Override
+    public Integer getIdByName(String name) {
+        return (Integer) dao.getByHQL("SELECT pl.id FROM ProductLine pl  WHERE pl.path LIKE ?", name);
     }
 }

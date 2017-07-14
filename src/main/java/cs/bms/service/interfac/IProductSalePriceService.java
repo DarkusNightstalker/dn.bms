@@ -9,22 +9,16 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-public abstract interface IProductSalePriceService
-        extends IGenericService<ProductSalePrice, Long> {
+public interface IProductSalePriceService extends IGenericService<ProductSalePrice, Long> {
 
-    public abstract List<Object[]> getBasicDataByCompanyProduct(Company paramCompany, Product paramProduct);
+    public List<Object[]> getBasicDataByCompanyProduct(Company paramCompany, Product paramProduct);
 
-    public abstract void deleteByCompanyProduct(Company paramCompany, Product paramProduct);
+    public void deleteByCompanyProduct(Company paramCompany, Product paramProduct);
 
-    public abstract void saveForGroup(BigDecimal price, Integer quantity, Company currentCompany, Product selected, User user);
+    public void saveForGroup(BigDecimal price, Integer quantity, Company currentCompany, Product selected, User user);
 
-    public abstract List<Object[]> getCreatedByAfterDate(Date paramDate, String paramString);
+    public List<Object[]> getCreatedByAfterDate(Date init, Date end, String paramString);
 
     public BigDecimal getBasicPrice(Company currentCompany, Product product);
+
 }
-
-
-/* Location:              D:\Proyectos\cs.bms.minisol.web-1.0.1\WEB-INF\lib\cs.bms-1.0.jar!\cs\bms\service\interfac\IProductSalePriceService.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       0.7.1
- */

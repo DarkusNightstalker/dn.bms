@@ -61,43 +61,47 @@ public class IdentityDocumentService extends GenericService<IdentityDocument, Sh
     }
 
     @Override
-    public List<Object[]> getCreateByAfterDate(Date date) {
+    public List<Object[]> getCreateByAfterDate(Date init,Date end) {
         return this.dao.listHQL(""
                 + "SELECT "
-                    + "idd.id,"
                     + "idd.code,"
                     + "idd.abbr,"
                     + "idd.name,"
                     + "idd.length_,"
-                    + "idd.active,"
-                    + "idd.createUser.id,"
-                    + "idd.createDate "
-                + "FROM IdentityDocument idd "
-                + "WHERE idd.createDate > ?", date);
+                    + "idd.createUser.username,"
+                    + "idd.createDate,"
+                    + "e.username,"
+                    + "idd.editDate,"
+                    + "idd.active "
+                + "FROM IdentityDocument idd left join idd.editUser u "
+                + "WHERE idd.createDate >= ? AND idd.createDate < ?", init,end);
     }
 
     @Override
-    public List<Object[]> getEditedByAfterDate(Date date, boolean b) {
+    public List<Object[]> getEditedByAfterDate(Date init,Date end, boolean b) {
         return this.dao.listHQL(""
                 + "SELECT "
-                    + "idd.id,"
                     + "idd.code,"
                     + "idd.abbr,"
                     + "idd.name,"
                     + "idd.length_,"
-                    + "idd.active,"
-                    + "idd.createUser.id,"
+                    + "idd.createUser.username,"
                     + "idd.createDate,"
-                    + "idd.editUser.id,"
-                    + "idd.editDate "
-                + "FROM IdentityDocument idd "
+                    + "e.username,"
+                    + "idd.editDate,"
+                    + "idd.active "
+                + "FROM IdentityDocument idd left join idd.editUser u "
                 + "WHERE "
-                    + "idd.createDate < ? AND "
-                    + "idd.editDate > ?", new Object[]{date, date});
+                    + "(idd.createDate < ? OR idd.createDate >= ?) AND "
+                    + "idd.editDate >= ? AND idd.editDate < ?",init, end,init, end);
     }
 
     @Override
     public Short getIdByCode(String code) {
-        return (Short) this.dao.getByHQL("SELECT idd.id FROM IdentityDocument idd WHERE idd.code LIKE ?",code);
+        return (Short) this.dao.getByHQL(""
+                + "SELECT "
+                + "idd.id "
+                + "FROM IdentityDocument idd "
+                + "WHERE idd.code LIKE ?",code);
     }
 }

@@ -64,37 +64,37 @@ public class UoMService extends GenericService<UoM, Integer> implements IUoMServ
     }
 
     @Override
-    public List<Object[]> getCreatedByAfterDate(Date date) {
+    public List<Object[]> getCreatedByAfterDate(Date init,Date end) {
         return this.dao.listHQL(""
                 + "SELECT "
-                    + "uom.id,"
                     + "uom.code,"
                     + "uom.name,"
-                    + "uom.active,"
-                    + "uom.createUser.id,"
-                    + "uom.createDate "
-                + "FROM UoM uom "
+                    + "uom.createUser.username,"
+                    + "uom.createDate,"
+                    + "e.username,"
+                    + "uom.editDate,"
+                    + "uom.active "
+                + "FROM UoM uom left join uom.editUser e "
                 + "WHERE "
-                    + "uom.createDate > ? "
-                + "ORDER BY uom.createDate", date);
+                    + "uom.createDate >= ? AND uom.editDate < ? "
+                + "ORDER BY uom.createDate", init,end);
     }
 
     @Override
-    public List<Object[]> getEditedByAfterDate(Date date, boolean b) {
+    public List<Object[]> getEditedByAfterDate(Date init,Date end, boolean b) {
         return this.dao.listHQL(""
                 + "SELECT "
-                    + "uom.id,"
                     + "uom.code,"
                     + "uom.name,"
-                    + "uom.active,"
-                    + "uom.createUser.id,"
+                    + "uom.createUser.username,"
                     + "uom.createDate,"
-                    + "uom.editUser.id,"
-                    + "uom.editDate "
-                + "FROM UoM uom "
+                    + "e.username,"
+                    + "uom.editDate,"
+                    + "uom.active "
+                + "FROM UoM uom left join uom.editUser e "
                 + "WHERE "
-                    + "uom.editDate > ? AND "
-                    + "uom.createDate < ? "
-                + "ORDER BY uom.editDate", new Object[]{date});
+                    + "(uom.editDate >= ? AND uom.editDate < ?) AND "
+                    + "(uom.createDate < ? OR uom.createDate >=?  )"
+                + "ORDER BY uom.editDate", init,end,init,end);
     }
 }

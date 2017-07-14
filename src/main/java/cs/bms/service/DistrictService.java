@@ -29,4 +29,13 @@ public class DistrictService extends GenericService<District, Integer> implement
                 + "FROM District d "
                 + "WHERE d.id = ?",id);
     }
+
+    @Override
+    public Integer getIdByUbigeo(String ubigeo) {
+        return (Integer) dao.getByHQL(""
+                + "SELECT "
+                + "d.id "
+                + "FROM District d "
+                + "WHERE d.subregion.region.name||'-'||d.subregion.name||'-'||d.name = ?",ubigeo);
+    }
 }

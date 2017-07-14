@@ -67,6 +67,8 @@ public interface IPaymentVoucherService extends IGenericService<PaymentVoucher, 
      * @param user
      */
     public void useVoucher(String code, Long saleId,User user);
+    
+    public void useVoucher(String code,User user);
 
     /**
      * Obtiene la suma de todos los valores de los vouchers registrados desde un momento especifico en adelante en una sede
@@ -76,4 +78,8 @@ public interface IPaymentVoucherService extends IGenericService<PaymentVoucher, 
      * @return
      */
     public Integer getTotalSumAfterByCompany(Date date, Company company);
+
+    public Long getIdByNumeration(String string);
+
+    public List<String> getUsedNumerations(Date min, Date max);
 }

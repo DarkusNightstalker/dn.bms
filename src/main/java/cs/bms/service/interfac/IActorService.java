@@ -10,35 +10,35 @@ import java.util.List;
  *
  * @author Darkus Nightmare
  */
-public abstract interface IActorService extends IGenericService<Actor, Long> {
+public  interface IActorService extends IGenericService<Actor, Long> {
 
     /**
      *
      * @param identityNumber
      * @param name
      */
-    public abstract void updateNameByIdentityDocument(String identityNumber, String name);
+    public void updateNameByIdentityDocument(String identityNumber, String name);
 
     /**
      *
      * @param identityDocumentCodes
      * @return
      */
-    public abstract List<Object[]> getIdentityDataForSynchro(String... identityDocumentCodes);
+    public List<Object[]> getIdentityDataForSynchro(String... identityDocumentCodes);
 
     /**
      *
      * @param identityDocumentCodes
      * @return
      */
-    public abstract Long countIdentityDataForSynchro(String... identityDocumentCodes);
+    public Long countIdentityDataForSynchro(String... identityDocumentCodes);
 
     /**
      *
      * @param identityNumber
      * @return
      */
-    public abstract Actor getByIdentityNumber(String identityNumber);
+    public Actor getByIdentityNumber(String identityNumber);
 
     /**
      *
@@ -46,22 +46,24 @@ public abstract interface IActorService extends IGenericService<Actor, Long> {
      * @param id
      * @return
      */
-    public abstract boolean verifyIdentityNumber(String identityNumber, Long id);
+    public boolean verifyIdentityNumber(String identityNumber, Long id);
 
     /**
      *
-     * @param date
+     * @param init
+     * @param end
      * @return
      */
-    public abstract List<Object[]> getCreatedByAfterDate(Date date);
+    public List<Object[]> getCreatedByAfterDate(Date init,Date end);
 
     /**
      *
-     * @param date
+     * @param init
+     * @param end
      * @param withRecentlyCreated
      * @return
      */
-    public abstract List<Object[]> getEditedByAfterDate(Date date, boolean withRecentlyCreated);
+    public List<Object[]> getEditedByAfterDate(Date init,Date end, boolean withRecentlyCreated);
 
     /**
      *
@@ -69,7 +71,7 @@ public abstract interface IActorService extends IGenericService<Actor, Long> {
      * @param points
      * @param user
      */
-    public abstract void subtractPoints(Long id, Long points, User user);
+    public void subtractPoints(Long id, Long points, User user);
 
     /**
      *
@@ -77,14 +79,22 @@ public abstract interface IActorService extends IGenericService<Actor, Long> {
      * @param points
      * @param user
      */
-    public abstract void addPoints(Long id, Long points, User user);
+    public void addPoints(Long id, Long points, User user);
+    
+    /**
+     *
+     * @param identityNumber
+     * @param points
+     * @param user
+     */
+    public void addPoints(String identityNumber, Long points, User user);
 
     /**
      *
      * @param identityNumber
      * @return
      */
-    public abstract Long getIdByIdentityNumber(String identityNumber);
+    public Long getIdByIdentityNumber(String identityNumber);
 
     /**
      *
@@ -105,4 +115,7 @@ public abstract interface IActorService extends IGenericService<Actor, Long> {
     public Long countNotUploaded();
 
     public void completeUploaded();
+
+    public List<Object[]> getDataWhenNotUploaded();
+
 }

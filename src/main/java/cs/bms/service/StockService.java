@@ -60,26 +60,37 @@ public class StockService
     }
 
     @Override
-    public List<Object[]> getCreatedByAfterDate(Date date, String company) {
-        return this.dao.listHQL("SELECT "
-                + "st.id,"
-                + "st.quantity,"
-                + "st.product.id,"
-                + "st.product.barcode,"
-                + "st.company.id,"
-                + "st.company.code "
-                + "FROM Stock st WHERE st.company.code = ? AND st.createDate > ?", company, date);
+    public List<Object[]> getCreatedByAfterDate(Date init,Date end, String company) {
+        return this.dao.listHQL(""
+                + "SELECT "
+                    + "st.company.code "
+                    + "st.product.barcode,"
+                    + "st.quantity,"
+                    + "st.createUser.username,"
+                    + "st.createDate,"
+                    + "e.username,"
+                    + "st.editDate "
+                + "FROM Stock st left join st.editUser e"
+                + "WHERE "
+                    + "st.company.code = ? AND "
+                    + "(st.createDate >= ? AND st.createDate < ?)", company, init,end);
     }
 
     @Override
-    public List<Object[]> getEditedByAfterDate(Date date, String company, boolean b) {
-        return this.dao.listHQL("SELECT "
-                + "st.id,"
-                + "st.quantity,"
-                + "st.product.id,"
-                + "st.product.barcode,"
-                + "st.company.id,"
-                + "st.company.code "
-                + "FROM Stock st WHERE st.company.code = ? AND st.createDate < ? AND st.editDate > ?", company, date, date);
+    public List<Object[]> getEditedByAfterDate(Date init,Date end, String company, boolean b) {
+        return this.dao.listHQL(""
+                + "SELECT "
+                    + "st.company.code "
+                    + "st.product.barcode,"
+                    + "st.quantity,"
+                    + "st.createUser.username,"
+                    + "st.createDate,"
+                    + "e.username,"
+                    + "st.editDate "
+                + "FROM Stock st left join st.editUser e"
+                + "WHERE "
+                + "st.company.code = ? AND "
+                + "(st.createDate < ? OR st.createDate >= ?) AND "
+                + "(st.editDate >= ? AND st.editDate < ?)", company, init, end,init,end);
     }
 }

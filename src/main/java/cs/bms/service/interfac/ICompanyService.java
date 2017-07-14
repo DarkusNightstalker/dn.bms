@@ -12,14 +12,15 @@ public interface ICompanyService extends IGenericService<Company, Integer> {
 
     public List<Object[]> getBasicDataNotOpening(int paramInt, Month paramMonth);
 
-    public List<Object[]> getCreatedByAfterDate(Date paramDate);
+    public List<Object[]> getCreatedByAfterDate(Date init,Date end);
 
-    public List<Object[]> getEditedByAfterDate(Date paramDate, boolean paramBoolean);
+    public List<Object[]> getEditedByAfterDate(Date init,Date end, boolean paramBoolean);
 
     public Company getByCode(String code);
 
     public List<Object[]> getBasicData();
 
     public Integer getIdByCode(String code);
+
 }
 

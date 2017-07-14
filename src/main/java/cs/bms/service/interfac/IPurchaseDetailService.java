@@ -1,19 +1,16 @@
 package cs.bms.service.interfac;
 
+import cs.bms.model.Company;
+import cs.bms.model.Product;
 import cs.bms.model.PurchaseDetail;
 import gkfire.hibernate.generic.interfac.IGenericService;
 import java.math.BigDecimal;
 
-public abstract interface IPurchaseDetailService
-  extends IGenericService<PurchaseDetail, Long>
-{
-  public abstract BigDecimal getQuantityById(Long paramLong);
-  
-  public abstract BigDecimal getUnitCostById(Long paramLong);
+public interface IPurchaseDetailService extends IGenericService<PurchaseDetail, Long> {
+
+    public BigDecimal getQuantityById(Long paramLong);
+
+    public BigDecimal getUnitCostById(Long paramLong);
+
+    public BigDecimal getSumQuantityByCompanyProduct(Company company, Product product);
 }
-
-
-/* Location:              D:\Proyectos\cs.bms.minisol.web-1.0.1\WEB-INF\lib\cs.bms-1.0.jar!\cs\bms\service\interfac\IPurchaseDetailService.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       0.7.1
- */

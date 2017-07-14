@@ -27,33 +27,33 @@ public class RolService extends GenericService<Rol, Integer> implements IRolServ
     }
 
     @Override
-    public List<Object[]> getCreateByAfterDate(Date date) {
+    public List<Object[]> getCreateByAfterDate(Date init,Date end) {
         return this.dao.listHQL(""
                 + "SELECT "
-                    + "r.id,"
                     + "r.name,"
                     + "r.active,"
-                    + "r.createUser.id,"
-                    + "r.createDate "
-                + "FROM Rol r "
-                + "WHERE r.createDate > ?", date);        
+                    + "r.createUser.username,"
+                    + "r.createDate,"
+                    + "e.username,"
+                    + "r.editDate "
+                + "FROM Rol r left join r.editUser e"
+                + "WHERE r.createDate >= ? AND r.createDate < ?", init,end);        
     }
 
     @Override
-    public List<Object[]> getEditedByAfterDate(Date date, boolean b) {
+    public List<Object[]> getEditedByAfterDate(Date init,Date end, boolean b) {
         return this.dao.listHQL(""
                 + "SELECT "
-                    + "r.id,"
                     + "r.name,"
                     + "r.active,"
-                    + "r.createUser.id,"
+                    + "r.createUser.username,"
                     + "r.createDate,"
-                    + "r.editUser.id,"
+                    + "e.username,"
                     + "r.editDate "
-                + "FROM Rol r "
+                + "FROM Rol r left join r.editUser e"
                 + "WHERE "
-                    + "a.createDate < ? AND "
-                    + "a.editDate > ?", date, date);
+                    + "(a.createDate < ? OR a.createDate >= ?) AND "
+                    + "(a.editDate >= ? AND a.editDate < ?)", init, end,init,end);
     
     }
 }

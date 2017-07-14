@@ -12,4 +12,6 @@ public interface IPurchaseService extends IGenericService<Purchase, Long> {
 
     public void clean() throws Exception;
 
+    public Long getIdByDocument(String supplierIdentityNumber, String paymentProofCode, String serie, String documentNumber);
+
 }

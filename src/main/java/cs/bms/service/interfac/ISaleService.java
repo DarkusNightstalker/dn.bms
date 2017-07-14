@@ -60,4 +60,10 @@ public interface ISaleService extends IGenericService<Sale, Long> {
 
     public void clean() throws Exception;
 
+    public Long getNotUploadedPointsByIdentityNumber(String identityNumber);
+
+    public List<Object[]> listPointsWhenNotUploaded();
+
+    public void completeUploadPoints();
+
 }

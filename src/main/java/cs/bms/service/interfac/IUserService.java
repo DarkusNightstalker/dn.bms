@@ -58,20 +58,22 @@ public interface IUserService extends IGenericService<User, Integer> {
 
     /**
      *
-     * @param date
+     * @param init
      * @param companyCode
+     * @param end
      * @return
      */
-    public List<Object[]> getCreateByAfterDate(Date date, String companyCode);
+    public List<Object[]> getCreateByAfterDate(Date init,Date end, String companyCode);
 
     /**
      *
-     * @param date
+     * @param init
+     * @param end
      * @param companyCode
      * @param b
      * @return
      */
-    public List<Object[]> getEditedByAfterDate(Date date, String companyCode, boolean b);
+    public List<Object[]> getEditedByAfterDate(Date init,Date end, String companyCode, boolean b);
 
     /**
      *
@@ -85,5 +87,7 @@ public interface IUserService extends IGenericService<User, Integer> {
     public Object[] getCreatedBasicData(AuditoryEntity entity);
 
     public Integer getIdByUsername(String username);
+
+    public boolean havePermissionInCompany(String codeLocalCompany,User user);
 
 }

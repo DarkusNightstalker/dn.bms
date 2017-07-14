@@ -13,4 +13,6 @@ public interface ISellerService extends IGenericService<Seller, Long> {
     public Seller getByDescSupplier(String paramString, Actor paramActor);
 
     public Seller getByDefaulSupplier(Actor paramActor);
+
+    public Long getIdByBasicData(String supplierIdentityNumber, String description, boolean default_);
 }

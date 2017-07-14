@@ -5,4 +5,5 @@ import gkfire.hibernate.generic.interfac.IGenericService;
 
 public interface IDistrictService extends IGenericService<District, Integer> {    
     public String getUbigeoNameById(Integer id);
+    public Integer getIdByUbigeo(String ubigeo);
 }

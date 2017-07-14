@@ -19,9 +19,12 @@ public interface IProductService extends IGenericService<Product, Long> {
 
     public List<String> getAllBarcodes();
 
-    public List<Object[]> getCreatedByAfterDate(Date paramDate);
+    public List<Object[]> getCreatedByAfterDate(Date init,Date end);
 
-    public List<Object[]> getEditedByAfterDate(Date paramDate, boolean paramBoolean);
+    public List<Object[]> getEditedByAfterDate(Date init,Date end, boolean paramBoolean);
 
     public List<Object[]> forAutocomplete(Integer quantity, String query);
+
+    public Long getIdByBarcode(String barcode);
+
 }

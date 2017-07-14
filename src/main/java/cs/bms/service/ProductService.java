@@ -96,48 +96,58 @@ public class ProductService extends GenericService<Product, Long> implements IPr
     }
 
     @Override
-    public List<Object[]> getCreatedByAfterDate(Date date) {
+    public List<Object[]> getCreatedByAfterDate(Date init,Date end) {
         return this.dao.listHQL(""
                 + "SELECT "
-                    + "p.id,"
                     + "p.barcode,"
                     + "p.name,"
                     + "p.description,"
-                    + "p.stockType.id,"
-                    + "p.stockType.code,"
-                    + "p.uom.id,"
+                    + "p.image,"
+                    + "pl.name,"
+                    + "st.code,"
                     + "p.uom.code,"
-                    + "p.active,"
-                    + "p.createUser.id,"
-                    + "p.createDate "
+                    + "p.id,"
+                    + "p.id,"
+                    + "p.createUser.username,"
+                    + "p.createDate,"
+                    + "e.username,"
+                    + "p.editDate,"
+                    + "p.active "
                 + "FROM Product p "
+                    + "left join p.productLine pl "
+                    + "left join p.stockType st "
+                    + "left join p.editUser e "
                 + "WHERE"
-                    + " p.createDate > ? "
-                + "ORDER BY p.createDate", date);
+                    + "(p.createDate >= ? AND p.createDate < ?) "
+                + "ORDER BY p.createDate", init,end);
     }
 
     @Override
-    public List<Object[]> getEditedByAfterDate(Date date, boolean b) {
+    public List<Object[]> getEditedByAfterDate(Date init,Date end, boolean b) {
         return this.dao.listHQL(""
                 + "SELECT "
-                    + "p.id,"
                     + "p.barcode,"
                     + "p.name,"
                     + "p.description,"
-                    + "p.stockType.id,"
-                    + "p.stockType.code,"
-                    + "p.uom.id,"
+                    + "p.image,"
+                    + "pl.name,"
+                    + "st.code,"
                     + "p.uom.code,"
-                    + "p.active,"
-                    + "p.createUser.id,"
+                    + "p.id,"
+                    + "p.id,"
+                    + "p.createUser.username,"
                     + "p.createDate,"
-                    + "p.editUser.id,"
-                    + "p.editDate "
+                    + "e.username,"
+                    + "p.editDate,"
+                    + "p.active "
                 + "FROM Product p "
+                    + "left join p.productLine pl "
+                    + "left join p.stockType st "
+                    + "left join p.editUser e "
                 + "WHERE "
-                    + "p.editDate > ? AND "
-                    + "p.createDate < ? "
-                + "ORDER BY p.editDate", date);
+                    + "(p.editDate >= ? AND p.editDate < ?) AND "
+                    + "(p.createDate < ? OR p.createDate >= ?) "
+                + "ORDER BY p.editDate", init,end,init,end);
     }
     
     @Override
@@ -151,5 +161,10 @@ public class ProductService extends GenericService<Product, Long> implements IPr
                 + "WHERE "
                     + "p.barcode LIKE ? OR "
                     + "LOWER(p.name) LIKE LOWER(?)", 1, quantity, "%"+query+"%","%"+query+"%");
+    }
+
+    @Override
+    public Long getIdByBarcode(String barcode) {
+        return (Long) dao.getByHQL("SELECT p.id FROM Product p WHERE p.barcode = ?",barcode);
     }
 }

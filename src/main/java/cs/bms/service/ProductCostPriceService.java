@@ -115,43 +115,39 @@ public class ProductCostPriceService extends GenericService<ProductCostPrice, Lo
     }
 
     @Override
-    public List<Object[]> getCreatedByAfterDate(Date date, String idCompany) {
+    public List<Object[]> getCreatedByAfterDate(Date init,Date end, String idCompany) {
         return this.dao.listHQL(""
                 + "SELECT "
-                    + "pcp.id,"
-                    + "pcp.product.id,"
-                    + "pcp.product.barcode,"
-                    + "pcp.company.id,"
                     + "pcp.company.code,"
+                    + "pcp.product.barcode,"
                     + "pcp.cost,"
-                    + "pcp.createUser.id,"
-                    + "pcp.createDate "
-                + "FROM ProductCostPrice pcp "
+                    + "pcp.createUser.username,"
+                    + "pcp.createDate,"
+                    + "e.username,"
+                    + "pcp.editDate "
+                + "FROM ProductCostPrice pcp join pcp.editUser e "
                 + "WHERE "
-                    + "pcp.createDate > ? AND "
+                    + "(pcp.createDate >= ? AND  pcp.editDate < ?)"
                     + "pcp.company.code = ? "
-                + "ORDER BY psp.createDate", date, idCompany);
+                + "ORDER BY psp.createDate", init,end, idCompany);
     }
 
     @Override
-    public List<Object[]> getEditedByAfterDate(Date date, String codeCompany, boolean b) {
+    public List<Object[]> getEditedByAfterDate(Date init,Date end, String codeCompany, boolean b) {
         return this.dao.listHQL(""
                 + "SELECT "
-                    + "pcp.id,"
-                    + "pcp.product.id,"
-                    + "pcp.product.barcode,"
-                    + "pcp.company.id,"
                     + "pcp.company.code,"
+                    + "pcp.product.barcode,"
                     + "pcp.cost,"
-                    + "pcp.createUser.id,"
+                    + "pcp.createUser.username,"
                     + "pcp.createDate,"
-                    + "pcp.editUser.id,"
+                    + "e.username,"
                     + "pcp.editDate "
-                + "FROM ProductCostPrice pcp "
+                + "FROM ProductCostPrice pcp join pcp.editUser e "
                 + "WHERE "
-                    + "pcp.editDate > ? AND "
-                    + "pcp.createDate < ? AND "
-                    + "pcp.company.code = ? "
-                + "ORDER BY psp.editDate", date, date, codeCompany);
+                    + "(pcp.editDate >= ? AND pcp.editDate < ?) AND "
+                    + "(pcp.createDate < ? OR pcp.createDate >= ?) AND "
+                    + " pcp.company.code = ? "
+                + "ORDER BY psp.editDate", init, end,init,end, codeCompany);
     }
 }

@@ -123,6 +123,8 @@ public class Sale implements AuditoryEntity<Long, User>, EntityActivate {
     private Date editDate;
     @Column(name = "active", nullable = false)
     private Boolean active = Boolean.TRUE;
+    @Column(name = "upload_points")
+    private Boolean uploadPoints;
     @Formula("(subtotal + igv - subtotal_discount)")
     private BigDecimal total;
     @Formula("(serie||'-'||document_number)")
@@ -389,5 +391,19 @@ public class Sale implements AuditoryEntity<Long, User>, EntityActivate {
      */
     public void setSpendPoints(Integer spendPoints) {
         this.spendPoints = spendPoints;
+    }
+
+    /**
+     * @return the uploadPoints
+     */
+    public Boolean getUploadPoints() {
+        return uploadPoints;
+    }
+
+    /**
+     * @param uploadPoints the uploadPoints to set
+     */
+    public void setUploadPoints(Boolean uploadPoints) {
+        this.uploadPoints = uploadPoints;
     }
 }

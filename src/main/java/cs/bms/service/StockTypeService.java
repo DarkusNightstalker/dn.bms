@@ -62,44 +62,39 @@ public class StockTypeService extends GenericService<StockType, Short> implement
                 + "FROM StockType st "
                 + "WHERE st.code LIKE ?", code);
     }
-
-    /**
-     *
-     * @param date
-     * @return
-     */
+    
     @Override
-    public List<Object[]> getCreatedByAfterDate(Date date) {
+    public List<Object[]> getCreatedByAfterDate(Date init,Date end) {
         return this.dao.listHQL(""
                 + "SELECT "
-                    + "stt.id,"
                     + "stt.code,"
                     + "stt.name,"
-                    + "stt.active,"
-                    + "stt.createUser.id,"
-                    + "stt.createDate "
-                + "FROM StockType stt "
+                    + "stt.createUser.username,"
+                    + "stt.createDate,"
+                    + "e.username,"
+                    + "stt.editDate,"
+                    + "stt.active "
+                + "FROM StockType stt left join stt.editUser e "
                 + "WHERE "
-                    + "stt.createDate > ? "
-                + "ORDER BY stt.createDate", date);
+                    + "stt.createDate >= ? AND stt.createDate < ? "
+                + "ORDER BY stt.createDate", init,end);
     }
 
     @Override
-    public List<Object[]> getEditedByAfterDate(Date date, boolean b) {
+    public List<Object[]> getEditedByAfterDate(Date init,Date end, boolean b) {
         return this.dao.listHQL(""
                 + "SELECT "
-                    + "stt.id,"
                     + "stt.code,"
                     + "stt.name,"
-                    + "stt.active,"
-                    + "stt.createUser.id,"
+                    + "stt.createUser.username,"
                     + "stt.createDate,"
-                    + "stt.editUser.id,"
-                    + "stt.editDate "
-                + "FROM StockType stt "
+                    + "e.username,"
+                    + "stt.editDate,"
+                    + "stt.active "
+                + "FROM StockType stt left join stt.editUser e "
                 + "WHERE "
-                    + "stt.editDate > ? AND "
-                    + "stt.createDate < ? "
-                + "ORDER BY stt.editDate", date,date);
+                    + "(stt.editDate >= ? AND stt.editDate < ?) AND "
+                    + "(stt.createDate < ? OR stt.createDate >= ?) "
+                + "ORDER BY stt.editDate", init,end,init,end);
     }
 }

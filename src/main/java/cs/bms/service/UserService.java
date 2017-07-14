@@ -1,6 +1,7 @@
 package cs.bms.service;
 
 import cs.bms.dao.interfac.IUserDao;
+import cs.bms.model.Company;
 import cs.bms.model.User;
 import cs.bms.service.interfac.IUserService;
 import cs.bms.util.AESKeys;
@@ -68,41 +69,41 @@ public class UserService extends GenericService<User, Integer> implements IUserS
     }
 
     @Override
-    public List<Object[]> getCreateByAfterDate(Date date, String paramString) {
+    public List<Object[]> getCreateByAfterDate(Date init,Date end, String code) {
         return this.dao.listHQL(""
                 + "SELECT "
-                    + "u.id,"
                     + "u.username,"
                     + "u.password,"
                     + "u.lastLogin,"
                     + "u.superUser,"
-                    + "u.employee.id,"
                     + "u.employee.identityNumber,"
-                    + "u.active,"
-                    + "u.createUser.id,"
-                    + "u.createDate "
-                + "FROM User u "
-                + "WHERE u.createDate > ?", date);
+                    + "u.createUser.username,"
+                    + "u.createDate,"
+                    + "e.username,"
+                    + "u.editDate,"
+                    + "u.active "
+                + "FROM User u left join u.editUser e "
+                + "WHERE u.createDate >= ? AND u.createDate < ?", init,end);
     }
 
     @Override
-    public List<Object[]> getEditedByAfterDate(Date date, String companyCode, boolean b) {
+    public List<Object[]> getEditedByAfterDate(Date init,Date end, String companyCode, boolean b) {
          return this.dao.listHQL(""
                 + "SELECT "
-                    + "u.id,"
                     + "u.username,"
                     + "u.password,"
                     + "u.lastLogin,"
                     + "u.superUser,"
-                    + "u.employee.id,"
                     + "u.employee.identityNumber,"
-                    + "u.active,"
-                    + "u.createUser.id,"
+                    + "u.createUser.username,"
                     + "u.createDate,"
-                    + "u.editUser.id,"
-                    + "u.editDate "
-                + "FROM User u "
-                + "WHERE u.createDate < ? AND u.editDate > ?", date,date);
+                    + "e.username,"
+                    + "u.editDate,"
+                    + "u.active "
+                + "FROM User u left join u.editUser e "
+                + "WHERE "
+                    + "(u.createDate < ? OR u.createDate >= ?) AND "
+                    + "(u.editDate >= ? AND u.editDate < ?) ", init,end,init,end);
     }
 
     @Override
@@ -135,4 +136,23 @@ public class UserService extends GenericService<User, Integer> implements IUserS
     public Integer getIdByUsername(String username) {
          return (Integer) dao.getByHQL("SELECT u.id FROM User u WHERE u.username = ?",username);
    }
+
+    @Override
+    public boolean havePermissionInCompany(String codeLocalCompany,User user) {
+        return dao.getByHQL(""
+                + "SELECT "
+                + "1  "
+                + "FROM SpecialPermission sp "
+                + "join sp.users u "
+                + "WHERE "
+                    + "u.id = ? AND "
+                    + "sp.entityName LIKE ? AND "
+                    + "sp.identifier IN "
+                    + "("
+                        + "SELECT "
+                        + "c.id "
+                        + "FROM Company c "
+                        + "WHERE c.code LIKE ?"
+                    + ")",user.getId(),Company.class.getSimpleName(),codeLocalCompany) != null;
+    }
 }

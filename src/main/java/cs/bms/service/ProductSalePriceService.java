@@ -76,20 +76,20 @@ public class ProductSalePriceService extends GenericService<ProductSalePrice, Lo
     }
 
     @Override
-    public List<Object[]> getCreatedByAfterDate(Date date, String company) {
+    public List<Object[]> getCreatedByAfterDate(Date init,Date end, String company) {
         return this.dao.listHQL(""
                 + "SELECT "
-                    + "psp.product.id,"
-                    + "psp.product.barcode,"
-                    + "psp.company.id,"
                     + "psp.company.code,"
+                    + "psp.product.barcode,"
                     + "psp.quantity,"
-                    + "psp.price "
+                    + "psp.price,"
+                    + "psp.createUser.username,"
+                    + "psp.createDate "
                 + "FROM ProductSalePrice psp "
                 + "WHERE "
-                    + "psp.createDate > ? AND "
+                    + "(psp.createDate >= ? AND psp.createDate < ?) AND "
                     + "psp.company.code = ? "
-                + "ORDER BY psp.createDate", date, company);
+                + "ORDER BY psp.createDate", init,end, company);
     }
 
     @Override

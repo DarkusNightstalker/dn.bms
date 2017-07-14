@@ -2,6 +2,7 @@ package cs.bms.model;
 
 import gkfire.auditory.AuditoryEntity;
 import gkfire.model.interfac.EntityActivate;
+import gkfire.model.interfac.ModelSynchronizable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,8 +21,7 @@ import org.hibernate.annotations.Formula;
 @Entity
 @Table(name = "internal_stock_movement", catalog = "public")
 @XmlRootElement
-public class InternalStockMovement
-        implements AuditoryEntity<Long, User>, EntityActivate {
+public class InternalStockMovement extends ModelSynchronizable implements AuditoryEntity<Long, User>, EntityActivate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

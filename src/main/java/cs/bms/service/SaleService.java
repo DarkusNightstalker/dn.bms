@@ -9,6 +9,8 @@ import gkfire.hibernate.generic.interfac.IGenericDao;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -70,5 +72,37 @@ public class SaleService extends GenericService<Sale, Long> implements ISaleServ
         dao.updateHQL("DELETE FROM SalePayment sp");
         dao.updateHQL("UPDATE PaymentVoucher pv SET sale = null,active = false WHERE sale is not null",new Date());        
         dao.updateHQL("DELETE FROM Sale s");        
+    }
+
+    @Override
+    public Long getNotUploadedPointsByIdentityNumber(String identityNumber) {
+        return ((Number) dao.getByHQL(""
+                + "SELECT "
+                + "COALESCE(SUM(s.points - s.spendPoints),0) "
+                + "FROM Sale s "
+                + "WHERE "
+                + "s.customer.identityNumber LIKE ? AND "
+                + "s.uploadPoints = false", identityNumber)).longValue();
+        
+    }
+
+    @Override
+    public List<Object[]> listPointsWhenNotUploaded() {
+        return dao.listHQL(""
+                + "SELECT "
+                + "s.customer.identityNumber,"
+                + "SUM(s.points-s-spendPoints) "
+                + "FROM Sale s "
+                + "WHERE s.customer.uploaded = true  AND s.uploadPoints = false"
+                + "GROUP BY s.customer.identityNumber");
+    }
+
+    @Override
+    public void completeUploadPoints() {
+        try {
+            dao.updateHQL("UPDATE Sale s SET s.uploadPoints = true WHERE s.uploadPoints = false");
+        } catch (Exception ex) {
+            
+        }
     }
 }

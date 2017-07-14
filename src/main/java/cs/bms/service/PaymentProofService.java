@@ -34,10 +34,9 @@ public class PaymentProofService extends GenericService<PaymentProof, Short> imp
     }
 
     @Override
-    public List<Object[]> getCreateByAfterDate(Date date) {
+    public List<Object[]> getCreateByAfterDate(Date init,Date end) {
         return this.dao.listHQL(""
                 + "SELECT "
-                    + "pp.id,"
                     + "pp.code,"
                     + "pp.abbr,"
                     + "pp.name,"
@@ -46,17 +45,18 @@ public class PaymentProofService extends GenericService<PaymentProof, Short> imp
                     + "pp.forStored,"
                     + "pp.forReturn,"
                     + "pp.active,"
-                    + "pp.createUser.id,"
-                    + "pp.createDate "
-                + "FROM PaymentProof pp "
-                + "WHERE pp.createDate > ?", new Object[]{date});
+                    + "pp.createUser.username,"
+                    + "pp.createDate,"
+                    + "e.username,"
+                    + "pp.editDate "
+                + "FROM PaymentProof pp left join pp.editUser e "
+                + "WHERE pp.createDate >= ?  AND pp.createDate < ?", init,end);
     }
 
     @Override
-    public List<Object[]> getEditedByAfterDate(Date date, boolean b) {
+    public List<Object[]> getEditedByAfterDate(Date init,Date end, boolean b) {
         return this.dao.listHQL(""
                 + "SELECT "
-                    + "pp.id,"
                     + "pp.code,"
                     + "pp.abbr,"
                     + "pp.name,"
@@ -65,12 +65,14 @@ public class PaymentProofService extends GenericService<PaymentProof, Short> imp
                     + "pp.forStored,"
                     + "pp.forReturn,"
                     + "pp.active,"
-                    + "pp.createUser.id,"
+                    + "pp.createUser.username,"
                     + "pp.createDate,"
-                    + "pp.editUser.id,"
+                    + "e.username,"
                     + "pp.editDate "
-                + "FROM PaymentProof pp "
-                + "WHERE pp.createDate < ? and pp.editDate > ?", date, date);
+                + "FROM PaymentProof pp left join pp.editUser e "
+                + "WHERE "
+                    + "(pp.createDate < ? OR pp.createDate >= ?) AND "
+                    + "(pp.editDate >= ?  AND pp.editDate < ?)", init, end,init,end);
     }
 
     @Override
