@@ -26,7 +26,7 @@ public class SalePaymentService extends GenericService<SalePayment, Long> implem
     private ISalePaymentDao dao;
 
     @Override
-    protected IGenericDao<SalePayment, Long> getDao() {
+    protected IGenericDao<SalePayment, Long> getBasicDao() {
         return this.dao;
     }
 

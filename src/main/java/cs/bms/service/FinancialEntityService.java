@@ -18,7 +18,7 @@ public class FinancialEntityService
     @Qualifier("financialEntityDao")
     private IFinancialEntityDao dao;
 
-    protected IGenericDao<FinancialEntity, Short> getDao() {
+    protected IGenericDao<FinancialEntity, Short> getBasicDao() {
         return this.dao;
     }
 

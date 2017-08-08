@@ -24,7 +24,7 @@ public class IdentityDocumentService extends GenericService<IdentityDocument, Sh
     }
 
     @Override
-    protected IGenericDao<IdentityDocument, Short> getDao() {
+    protected IGenericDao<IdentityDocument, Short> getBasicDao() {
         return this.dao;
     }
 

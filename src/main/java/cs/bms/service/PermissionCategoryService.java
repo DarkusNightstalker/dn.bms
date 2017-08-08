@@ -18,7 +18,7 @@ public class PermissionCategoryService
     @Qualifier("permissionCategoryDao")
     private IPermissionCategoryDao dao;
 
-    protected IGenericDao<PermissionCategory, Integer> getDao() {
+    protected IGenericDao<PermissionCategory, Integer> getBasicDao() {
         return this.dao;
     }
 }

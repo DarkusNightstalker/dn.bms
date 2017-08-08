@@ -24,7 +24,7 @@ public class PurchaseService extends GenericService<Purchase, Long> implements I
     private IPurchaseDao dao;
 
     @Override
-    protected IGenericDao<Purchase, Long> getDao() {
+    protected IGenericDao<Purchase, Long> getBasicDao() {
         return this.dao;
     }
 

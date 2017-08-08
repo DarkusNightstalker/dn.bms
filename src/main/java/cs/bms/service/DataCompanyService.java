@@ -24,7 +24,7 @@ public class DataCompanyService extends GenericService<DataCompany, Integer> imp
     private IDataCompanyDao dao;
 
     @Override
-    protected IGenericDao<DataCompany, Integer> getDao() {
+    protected IGenericDao<DataCompany, Integer> getBasicDao() {
         return this.dao;
     }
 

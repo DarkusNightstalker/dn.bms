@@ -24,8 +24,8 @@ import org.springframework.stereotype.Service;
 /*    */   @Autowired
 /*    */   @Qualifier("specialPermissionDao")
 /*    */   private ISpecialPermissionDao dao;
-/*    */   
-/*    */   protected IGenericDao<SpecialPermission, Short> getDao()
+/*    */   /*    */   
+/*    */   protected IGenericDao<SpecialPermission, Short> getBasicDao()
 /*    */   {
 /* 28 */     return this.dao;
 /*    */   }

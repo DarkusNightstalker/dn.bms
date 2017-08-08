@@ -30,7 +30,7 @@ public class CashRegisterDetailService extends GenericService<CashRegisterDetail
     private ICashRegisterDetailDao dao;
 
     @Override
-    protected IGenericDao<CashRegisterDetail, Serializable> getDao() {
+    protected IGenericDao<CashRegisterDetail, Serializable> getBasicDao() {
         return this.dao;
     }
 

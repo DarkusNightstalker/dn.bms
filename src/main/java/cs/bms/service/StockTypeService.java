@@ -19,7 +19,7 @@ public class StockTypeService extends GenericService<StockType, Short> implement
     private IStockTypeDao dao;
 
     @Override
-    protected IGenericDao<StockType, Short> getDao() {
+    protected IGenericDao<StockType, Short> getBasicDao() {
         return this.dao;
     }
 

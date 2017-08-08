@@ -24,7 +24,7 @@ public class UoMService extends GenericService<UoM, Integer> implements IUoMServ
     private IUoMDao dao;
 
     @Override
-    protected IGenericDao<UoM, Integer> getDao() {
+    protected IGenericDao<UoM, Integer> getBasicDao() {
         return this.dao;
     }
 

@@ -17,7 +17,7 @@ public class DistrictService extends GenericService<District, Integer> implement
     private IDistrictDao dao;
 
     @Override
-    protected IGenericDao<District, Integer> getDao() {
+    protected IGenericDao<District, Integer> getBasicDao() {
         return this.dao;
     }
 

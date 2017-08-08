@@ -22,7 +22,7 @@ public class RolService extends GenericService<Rol, Integer> implements IRolServ
     }
 
     @Override
-    protected IGenericDao<Rol, Integer> getDao() {
+    protected IGenericDao<Rol, Integer> getBasicDao() {
         return this.dao;
     }
 

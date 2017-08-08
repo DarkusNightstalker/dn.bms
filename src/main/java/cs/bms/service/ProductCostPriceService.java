@@ -29,7 +29,7 @@ public class ProductCostPriceService extends GenericService<ProductCostPrice, Lo
     private IProductCostPriceDao dao;
 
     @Override
-    protected IGenericDao<ProductCostPrice, Long> getDao() {
+    protected IGenericDao<ProductCostPrice, Long> getBasicDao() {
         return this.dao;
     }
 

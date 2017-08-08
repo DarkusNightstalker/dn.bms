@@ -29,7 +29,7 @@ public class SaleService extends GenericService<Sale, Long> implements ISaleServ
     private ISaleDao dao;
 
     @Override
-    protected IGenericDao<Sale, Long> getDao() {
+    protected IGenericDao<Sale, Long> getBasicDao() {
         return this.dao;
     }
 

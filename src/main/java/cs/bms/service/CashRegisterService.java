@@ -17,7 +17,7 @@ public class CashRegisterService extends GenericService<CashRegister, Long> impl
     @Qualifier("cashRegisterDao")
     private ICashRegisterDao dao;
 
-    protected IGenericDao<CashRegister, Long> getDao() {
+    protected IGenericDao<CashRegister, Long> getBasicDao() {
         return this.dao;
     }
 

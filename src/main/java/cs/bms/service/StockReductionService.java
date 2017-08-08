@@ -24,8 +24,8 @@ import org.springframework.stereotype.Service;
 /*    */   @Autowired
 /*    */   @Qualifier("stockReductionDao")
 /*    */   private IStockReductionDao dao;
-/*    */   
-/*    */   protected IGenericDao<StockReduction, Long> getDao()
+/*    */   /*    */   
+/*    */   protected IGenericDao<StockReduction, Long> getBasicDao()
 /*    */   {
 /* 28 */     return this.dao;
 /*    */   }

@@ -26,7 +26,7 @@ public class ActorService extends GenericService<Actor, Long> implements IActorS
 
 
     @Override
-    protected IGenericDao<Actor, Long> getDao() {
+    protected IGenericDao<Actor, Long> getBasicDao() {
         return this.dao;
     }
 

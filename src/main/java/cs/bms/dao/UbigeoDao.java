@@ -21,7 +21,7 @@ public class UbigeoDao extends GenericDao<Ubigeo, Integer> implements IUbigeoDao
     }
 
     @Override
-    public int save(Ubigeo object) {
+    public Integer save(Ubigeo object) {
         throw new UnsupportedOperationException();
     }
 

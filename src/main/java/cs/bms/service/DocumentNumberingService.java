@@ -19,7 +19,7 @@ public class DocumentNumberingService extends GenericService<DocumentNumbering, 
     private IDocumentNumberingDao dao;
 
     @Override
-    protected IGenericDao<DocumentNumbering, Integer> getDao() {
+    protected IGenericDao<DocumentNumbering, Integer> getBasicDao() {
         return this.dao;
     }
 

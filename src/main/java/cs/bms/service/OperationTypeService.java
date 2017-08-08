@@ -18,7 +18,7 @@ public class OperationTypeService
     @Qualifier("operationTypeDao")
     private IOperationTypeDao dao;
 
-    protected IGenericDao<OperationType, Short> getDao() {
+    protected IGenericDao<OperationType, Short> getBasicDao() {
         return this.dao;
     }
 

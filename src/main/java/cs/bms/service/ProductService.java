@@ -24,7 +24,7 @@ public class ProductService extends GenericService<Product, Long> implements IPr
     private IProductDao dao;
 
     @Override
-    protected IGenericDao<Product, Long> getDao() {
+    protected IGenericDao<Product, Long> getBasicDao() {
         return this.dao;
     }
 

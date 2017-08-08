@@ -35,7 +35,7 @@ public class UserService extends GenericService<User, Integer> implements IUserS
     }
 
     @Override
-    protected IGenericDao<User, Integer> getDao() {
+    protected IGenericDao<User, Integer> getBasicDao() {
         return this.dao;
     }
 

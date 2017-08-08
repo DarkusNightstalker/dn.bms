@@ -20,7 +20,7 @@ public class WorkShiftService extends GenericService<WorkShift, Integer> impleme
     private IWorkShiftDao dao;
 
     @Override
-    protected IGenericDao<WorkShift, Integer> getDao() {
+    protected IGenericDao<WorkShift, Integer> getBasicDao() {
         return this.dao;
     }
 

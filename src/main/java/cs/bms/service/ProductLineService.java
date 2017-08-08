@@ -20,7 +20,7 @@ public class ProductLineService
     private IProductLineDao dao;
 
     @Override
-    protected IGenericDao<ProductLine, Integer> getDao() {
+    protected IGenericDao<ProductLine, Integer> getBasicDao() {
         return this.dao;
     }
 

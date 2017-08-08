@@ -20,7 +20,7 @@ public class CompanyGroupService
     private ICompanyGroupDao dao;
 
     @Override
-    protected IGenericDao<CompanyGroup, Integer> getDao() {
+    protected IGenericDao<CompanyGroup, Integer> getBasicDao() {
         return this.dao;
     }
 

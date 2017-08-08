@@ -24,8 +24,8 @@ import org.springframework.stereotype.Service;
 /*    */   @Autowired
 /*    */   @Qualifier("regionDao")
 /*    */   private IRegionDao dao;
-/*    */   
-/*    */   protected IGenericDao<Region, Integer> getDao()
+/*    */   /*    */   
+/*    */   protected IGenericDao<Region, Integer> getBasicDao()
 /*    */   {
 /* 28 */     return this.dao;
 /*    */   }

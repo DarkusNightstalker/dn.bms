@@ -22,7 +22,7 @@ public class SaleDetailService extends GenericService<SaleDetail, Long> implemen
     private ISaleDetailDao dao;
 
     @Override
-    protected IGenericDao<SaleDetail, Long> getDao() {
+    protected IGenericDao<SaleDetail, Long> getBasicDao() {
         return this.dao;
     }
 

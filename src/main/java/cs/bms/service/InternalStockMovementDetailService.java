@@ -22,7 +22,7 @@ public class InternalStockMovementDetailService extends GenericService<InternalS
     private IInternalStockMovementDetailDao dao;
 
     @Override
-    protected IGenericDao<InternalStockMovementDetail, Long> getDao() {
+    protected IGenericDao<InternalStockMovementDetail, Long> getBasicDao() {
         return this.dao;
     }
 

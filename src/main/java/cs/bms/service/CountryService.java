@@ -18,7 +18,7 @@ public class CountryService
     @Qualifier("countryDao")
     private ICountryDao dao;
 
-    protected IGenericDao<Country, Integer> getDao() {
+    protected IGenericDao<Country, Integer> getBasicDao() {
         return this.dao;
     }
 }

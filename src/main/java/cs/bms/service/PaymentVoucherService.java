@@ -28,7 +28,7 @@ public class PaymentVoucherService extends GenericService<PaymentVoucher, Long> 
     private IPaymentVoucherDao dao;
 
     @Override
-    protected IGenericDao<PaymentVoucher, Long> getDao() {
+    protected IGenericDao<PaymentVoucher, Long> getBasicDao() {
         return this.dao;
     }
 

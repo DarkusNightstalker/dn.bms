@@ -25,7 +25,7 @@ public class PermissionService
         return this.dao.getBy(category);
     }
 
-    protected IGenericDao<Permission, Integer> getDao() {
+    protected IGenericDao<Permission, Integer> getBasicDao() {
         return this.dao;
     }
 

@@ -20,7 +20,7 @@ public class StockReturnCustomerDetailService extends GenericService<StockReturn
     private IStockReturnCustomerDetailDao dao;
 
     @Override
-    protected IGenericDao<StockReturnCustomerDetail, Long> getDao() {
+    protected IGenericDao<StockReturnCustomerDetail, Long> getBasicDao() {
         return this.dao;
     }
 

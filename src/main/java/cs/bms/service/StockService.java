@@ -24,7 +24,7 @@ public class StockService
     @Qualifier("stockDao")
     private IStockDao dao;
 
-    protected IGenericDao<Stock, Long> getDao() {
+    protected IGenericDao<Stock, Long> getBasicDao() {
         return this.dao;
     }
 

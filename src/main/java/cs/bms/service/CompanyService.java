@@ -20,7 +20,7 @@ public class CompanyService extends GenericService<Company, Integer> implements 
     private ICompanyDao dao;
 
     @Override
-    protected IGenericDao<Company, Integer> getDao() {
+    protected IGenericDao<Company, Integer> getBasicDao() {
         return this.dao;
     }
 

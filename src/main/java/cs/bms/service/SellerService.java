@@ -20,7 +20,7 @@ public class SellerService extends GenericService<Seller, Long>   implements ISe
     private ISellerDao dao;
 
     @Override
-    protected IGenericDao<Seller, Long> getDao() {
+    protected IGenericDao<Seller, Long> getBasicDao() {
         return this.dao;
     }
 

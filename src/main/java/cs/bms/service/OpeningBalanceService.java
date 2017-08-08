@@ -32,7 +32,7 @@ public class OpeningBalanceService
     @Qualifier("operationTypeService")
     private IOperationTypeService operationTypeService;
 
-    protected IGenericDao<OpeningBalance, Long> getDao() {
+    protected IGenericDao<OpeningBalance, Long> getBasicDao() {
         return this.dao;
     }
 

@@ -23,7 +23,7 @@ public class ElectronicBookCategoryService
         return this.dao.existCode(code, id);
     }
 
-    protected IGenericDao<ElectronicBookCategory, Short> getDao() {
+    protected IGenericDao<ElectronicBookCategory, Short> getBasicDao() {
         return this.dao;
     }
 

@@ -20,7 +20,7 @@ public interface IUbigeoDao extends IGenericDao<Ubigeo, Integer> {
     }
     
     @Override
-    default int save(Ubigeo object){
+    default Integer save(Ubigeo object){
         throw new UnsupportedOperationException();
     }
     

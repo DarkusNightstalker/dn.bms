@@ -24,7 +24,7 @@ public class PaymentProofService extends GenericService<PaymentProof, Short> imp
     }
 
     @Override
-    protected IGenericDao<PaymentProof, Short> getDao() {
+    protected IGenericDao<PaymentProof, Short> getBasicDao() {
         return this.dao;
     }
 
