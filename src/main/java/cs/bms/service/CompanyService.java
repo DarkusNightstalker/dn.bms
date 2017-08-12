@@ -116,7 +116,7 @@ public class CompanyService extends GenericService<Company, Integer> implements 
                 + "FROM Company c left join c.editUser e "
                 + "WHERE "
                     + "(c.createDate < ? OR c.createDate >= ?) AND "
-                    + "c.editDate => ? AND c.editDate < ?"
+                    + "c.editDate >= ? AND c.editDate < ?"
                 + "ORDER BY c.editDate", init, end,init, end);
     }
 

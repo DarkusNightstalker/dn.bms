@@ -125,11 +125,11 @@ public class ProductCostPriceService extends GenericService<ProductCostPrice, Lo
                     + "pcp.createDate,"
                     + "e.username,"
                     + "pcp.editDate "
-                + "FROM ProductCostPrice pcp join pcp.editUser e "
+                + "FROM ProductCostPrice pcp left join pcp.editUser e "
                 + "WHERE "
-                    + "(pcp.createDate >= ? AND  pcp.editDate < ?)"
+                    + "(pcp.createDate >= ? AND  pcp.editDate < ?) AND "
                     + "pcp.company.code = ? "
-                + "ORDER BY psp.createDate", init,end, idCompany);
+                + "ORDER BY pcp.createDate", init,end, idCompany);
     }
 
     @Override
@@ -148,6 +148,6 @@ public class ProductCostPriceService extends GenericService<ProductCostPrice, Lo
                     + "(pcp.editDate >= ? AND pcp.editDate < ?) AND "
                     + "(pcp.createDate < ? OR pcp.createDate >= ?) AND "
                     + " pcp.company.code = ? "
-                + "ORDER BY psp.editDate", init, end,init,end, codeCompany);
+                + "ORDER BY pcp.editDate", init, end,init,end, codeCompany);
     }
 }

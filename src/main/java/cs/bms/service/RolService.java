@@ -9,7 +9,9 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RolService extends GenericService<Rol, Integer> implements IRolService {
 
     @Autowired
@@ -36,7 +38,7 @@ public class RolService extends GenericService<Rol, Integer> implements IRolServ
                     + "r.createDate,"
                     + "e.username,"
                     + "r.editDate "
-                + "FROM Rol r left join r.editUser e"
+                + "FROM Rol r left join r.editUser e "
                 + "WHERE r.createDate >= ? AND r.createDate < ?", init,end);        
     }
 
@@ -50,10 +52,10 @@ public class RolService extends GenericService<Rol, Integer> implements IRolServ
                     + "r.createDate,"
                     + "e.username,"
                     + "r.editDate "
-                + "FROM Rol r left join r.editUser e"
+                + "FROM Rol r left join r.editUser e "
                 + "WHERE "
-                    + "(a.createDate < ? OR a.createDate >= ?) AND "
-                    + "(a.editDate >= ? AND a.editDate < ?)", init, end,init,end);
+                    + "(r.createDate < ? OR r.createDate >= ?) AND "
+                    + "(r.editDate >= ? AND r.editDate < ?)", init, end,init,end);
     
     }
 }

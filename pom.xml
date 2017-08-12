@@ -31,16 +31,7 @@
             <artifactId>jsoup</artifactId>
             <version>1.10.2</version>
         </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-json-jackson</artifactId>
-            <version>2.7</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-moxy</artifactId>
-            <version>2.7</version>
-        </dependency>
+        
         <dependency>  
             <groupId>com.airhacks</groupId>  
             <artifactId>jaxrs-cors</artifactId>  
@@ -123,11 +114,6 @@
             <version>2.7</version>
         </dependency>
         
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.2.4</version>
-        </dependency>
         <!-- Spring 3 dependencies -->
         <dependency>
             <groupId>org.springframework</groupId>

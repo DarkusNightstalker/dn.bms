@@ -73,7 +73,7 @@ public class IdentityDocumentService extends GenericService<IdentityDocument, Sh
                     + "e.username,"
                     + "idd.editDate,"
                     + "idd.active "
-                + "FROM IdentityDocument idd left join idd.editUser u "
+                + "FROM IdentityDocument idd left join idd.editUser e "
                 + "WHERE idd.createDate >= ? AND idd.createDate < ?", init,end);
     }
 
@@ -90,7 +90,7 @@ public class IdentityDocumentService extends GenericService<IdentityDocument, Sh
                     + "e.username,"
                     + "idd.editDate,"
                     + "idd.active "
-                + "FROM IdentityDocument idd left join idd.editUser u "
+                + "FROM IdentityDocument idd left join idd.editUser e "
                 + "WHERE "
                     + "(idd.createDate < ? OR idd.createDate >= ?) AND "
                     + "idd.editDate >= ? AND idd.editDate < ?",init, end,init, end);

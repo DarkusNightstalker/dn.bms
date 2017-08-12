@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Darkus Nightmare
  */
 @Entity
-@Table(name = "user", catalog = "public")
+@Table(name = "\"user\"", catalog = "public")
 @XmlRootElement
 public class User implements AuditoryEntity<Integer, User>, EntityActivate {
 

@@ -100,9 +100,9 @@ public class InternalStockMovementService extends GenericService<InternalStockMo
                     + "ism.active,"
                     + "ism.id "
                 + "FROM InternalStockMovement ism "
-                    + "LEFT JOIN ism.carrier c "
+                    + "LEFT JOIN ism.carrier c LEFT JOIN ism.editUser e "
                 + "WHERE "
-                + "(ism.createDate < ? OR ism.create >= ?) AND "
+                + "(ism.createDate < ? OR ism.createDate >= ?) AND "
                 + "ism.editDate >= ? AND ism.editDate < ? AND "
                 + "(ism.sourceCompany.code LIKE ? OR "
                 + "ism.targetCompany.code LIKE ?)", init,end,init,end,codeCompany,codeCompany);
