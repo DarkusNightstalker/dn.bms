@@ -52,8 +52,8 @@ public class ProductSalePriceService extends GenericService<ProductSalePrice, Lo
                         + "SELECT "
                             + "c.id "
                         + "FROM Company c "
-                        + "WHERE c.companyGroup = ?"
-                    + ")", product, company.getCompanyGroup());
+                        + "WHERE c.companyGroup = (SELECT c2.companyGroup FROM Company c2 WHERE c2.id = ?)"
+                    + ")", product, company.getId());
     }
 
     @Override

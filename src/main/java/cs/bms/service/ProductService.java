@@ -5,6 +5,7 @@ import cs.bms.model.Product;
 import cs.bms.service.interfac.IProductService;
 import gkfire.hibernate.generic.GenericService;
 import gkfire.hibernate.generic.interfac.IGenericDao;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,7 +98,7 @@ public class ProductService extends GenericService<Product, Long> implements IPr
 
     @Override
     public List<Object[]> getCreatedByAfterDate(Date init,Date end) {
-        return this.dao.listHQL(""
+        List<Object[]> data = dao.listHQL(""
                 + "SELECT "
                     + "p.barcode,"
                     + "p.name,"
@@ -120,11 +121,22 @@ public class ProductService extends GenericService<Product, Long> implements IPr
                 + "WHERE"
                     + "(p.createDate >= ? AND p.createDate < ?) "
                 + "ORDER BY p.createDate", init,end);
+        data.forEach(item ->{
+            item[7] = dao.listHQL("SELECT "
+                    + "s.supplier.identityNumber,"
+                    + "s.description,"
+                    + "s.default_ "
+                    + "FROM Product p join p.sellers s WHERE p.id = ?",item[7]);
+            item[8] = dao.listHQL("SELECT "
+                    + "s.identityNumber "
+                    + "FROM Product p join p.suppliers s WHERE p.id = ?",item[8]);
+        });
+        return data;
     }
 
     @Override
     public List<Object[]> getEditedByAfterDate(Date init,Date end, boolean b) {
-        return this.dao.listHQL(""
+        List<Object[]> data = dao.listHQL(""
                 + "SELECT "
                     + "p.barcode,"
                     + "p.name,"
@@ -148,6 +160,17 @@ public class ProductService extends GenericService<Product, Long> implements IPr
                     + "(p.editDate >= ? AND p.editDate < ?) AND "
                     + "(p.createDate < ? OR p.createDate >= ?) "
                 + "ORDER BY p.editDate", init,end,init,end);
+        data.forEach(item ->{
+            item[7] = dao.listHQL("SELECT "
+                    + "s.supplier.identityNumber,"
+                    + "s.description,"
+                    + "s.default_ "
+                    + "FROM Product p join p.sellers s WHERE p.id = ?",item[7]);
+            item[8] = dao.listHQL("SELECT "
+                    + "s.identityNumber "
+                    + "FROM Product p join p.suppliers s WHERE p.id = ?",item[8]);
+        });
+        return data;
     }
     
     @Override

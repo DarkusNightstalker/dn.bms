@@ -155,4 +155,9 @@ public class UserService extends GenericService<User, Integer> implements IUserS
                         + "WHERE c.code LIKE ?"
                     + ")",user.getId(),Company.class.getSimpleName(),codeLocalCompany) != null;
     }
+
+    @Override
+    public User getByUsername(String username) {
+        return (User) dao.getByHQL("FROM User u where u.username LIKE ?", username);
+    }
 }

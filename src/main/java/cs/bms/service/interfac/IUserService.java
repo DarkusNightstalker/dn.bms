@@ -90,4 +90,6 @@ public interface IUserService extends IGenericService<User, Integer> {
 
     public boolean havePermissionInCompany(String codeLocalCompany,User user);
 
+    public User getByUsername(String system);
+
 }
