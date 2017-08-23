@@ -7,6 +7,8 @@ import cs.bms.model.Seller;
 import cs.bms.service.interfac.ISellerService;
 import gkfire.hibernate.generic.GenericService;
 import gkfire.hibernate.generic.interfac.IGenericDao;
+
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -54,5 +56,45 @@ public class SellerService extends GenericService<Seller, Long>   implements ISe
                     + "s.supplier.identityNumber LIKE ? AND "
                     + "s.description LIKE ? AND "
                     + "s.default_ = ? ",supplierIdentityNumber,description,default_);
+    }
+
+    @Override
+    public List<Object[]> getCreatedByAfterDate(Date init, Date end) {
+        return dao.listHQL("" +
+                "SELECT " +
+                    "s.supplier.identityNumber," +
+                    "s.actor.identityNumber," +
+                    "s,description," +
+                    "s.default_," +
+                    "s.id," +
+                    "s.createUser.username," +
+                    "s.createDate," +
+                    "e.username," +
+                    "s.editDate " +
+                "FROM Seller s " +
+                    "LEFT JOIN s.editUser e" +
+                "WHERE " +
+                    "s.createDate >= ? AND " +
+                    "s.createDate < ?", init,end);
+    }
+
+    @Override
+    public List<Object[]> getEditedByAfterDate(Date init, Date end, boolean b) {
+        return dao.listHQL("" +
+                "SELECT " +
+                    "s.supplier.identityNumber," +
+                    "s.actor.identityNumber," +
+                    "s,description," +
+                    "s.default_," +
+                    "s.id," +
+                    "s.createUser.username," +
+                    "s.createDate," +
+                    "e.username," +
+                    "s.editDate " +
+                "FROM Seller s " +
+                "LEFT JOIN s.editUser e" +
+                "WHERE " +
+                    "(s.createDate < ? OR s.createDate >= ?) AND " +
+                    "s.editDate >= ? AND s.editDate < ?", init, end,init,end);
     }
 }
