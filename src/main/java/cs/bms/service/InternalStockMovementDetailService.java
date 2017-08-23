@@ -112,7 +112,7 @@ public class InternalStockMovementDetailService extends GenericService<InternalS
                     + "ismd.quantity "
                 + "FROM InternalStockMovementDetail ismd "
                 + "WHERE "
-                    + "ismd.sourceCompany = ? AND "
+                    + "ismd.internalStockMovement.sourceCompany = ? AND "
                     + "ismd.product = ? AND "
                     + "ismd.internalStockMovement.serverExist = true AND "
                     + "ismd.internalStockMovement.uploaded = false ",company,product);
@@ -126,9 +126,9 @@ public class InternalStockMovementDetailService extends GenericService<InternalS
                     + "COALESCE(SUM(ismd.quantity),0) "
                 + "FROM InternalStockMovementDetail ismd "
                 + "WHERE "
-                    + "ismd.targetCompany = ? AND "
+                    + "ismd.internalStockMovement.targetCompany = ? AND "
                     + "ismd.product = ? AND "
-                    + "ismd.dateRealArrival is not null AND "
+                    + "ismd.internalStockMovement.dateRealArrival is not null AND "
                     + "ismd.internalStockMovement.serverExist = false AND "
                     + "ismd.internalStockMovement.uploaded = false ",company,product);
     }
@@ -140,7 +140,7 @@ public class InternalStockMovementDetailService extends GenericService<InternalS
                     + "COALESCE(SUM(ismd.quantity),0) "
                 + "FROM InternalStockMovementDetail ismd "
                 + "WHERE "
-                    + "ismd.sourceCompany = ? AND "
+                    + "ismd.internalStockMovement.sourceCompany = ? AND "
                     + "ismd.product = ? AND "
                     + "ismd.internalStockMovement.serverExist = false AND "
                     + "ismd.internalStockMovement.uploaded = false ",company,product);
