@@ -86,6 +86,8 @@ public class InternalStockMovement extends ModelSynchronizable implements Audito
     private Boolean sent = Boolean.FALSE;
     @Column(name = "uploaded", nullable = false)
     private Boolean uploaded = Boolean.TRUE;
+    @Column(name = "server_exist", nullable = false)
+    private Boolean serverExist = Boolean.FALSE;
 
     @Formula("(serie||'-'||document_number)")
     private String fullDocument;
@@ -290,5 +292,19 @@ public class InternalStockMovement extends ModelSynchronizable implements Audito
      */
     public void setUploaded(Boolean uploaded) {
         this.uploaded = uploaded;
+    }
+
+    /**
+     * @return the serverExist
+     */
+    public Boolean getServerExist() {
+        return serverExist;
+    }
+
+    /**
+     * @param serverExist the serverExist to set
+     */
+    public void setServerExist(Boolean serverExist) {
+        this.serverExist = serverExist;
     }
 }
