@@ -72,7 +72,7 @@ public class SellerService extends GenericService<Seller, Long>   implements ISe
                     "e.username," +
                     "s.editDate " +
                 "FROM Seller s " +
-                    "LEFT JOIN s.editUser e" +
+                    "LEFT JOIN s.editUser e " +
                 "WHERE " +
                     "s.createDate >= ? AND " +
                     "s.createDate < ?", init,end);
@@ -92,7 +92,7 @@ public class SellerService extends GenericService<Seller, Long>   implements ISe
                     "e.username," +
                     "s.editDate " +
                 "FROM Seller s " +
-                "LEFT JOIN s.editUser e" +
+                "LEFT JOIN s.editUser e " +
                 "WHERE " +
                     "(s.createDate < ? OR s.createDate >= ?) AND " +
                     "s.editDate >= ? AND s.editDate < ?", init, end,init,end);
