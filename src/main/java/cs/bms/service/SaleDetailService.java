@@ -63,7 +63,7 @@ public class SaleDetailService extends GenericService<SaleDetail, Long> implemen
         return (BigDecimal) dao.getByHQL(""
                 + "SELECT "
                     + "COALESCE(SUM(sd.quantity),0) "
-                + "FROM SaleDetail pd "
+                + "FROM SaleDetail sd "
                 + "WHERE "
                     + "sd.sale.company = ? AND "
                     + "sd.product = ? AND "

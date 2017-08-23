@@ -95,9 +95,9 @@ public class InternalStockMovementDetailService extends GenericService<InternalS
                     + "ismd.quantity "
                 + "FROM InternalStockMovementDetail ismd "
                 + "WHERE "
-                    + "ismd.targetCompany = ? AND "
+                    + "ismd.internalStockMovement.targetCompany = ? AND "
                     + "ismd.product = ? AND "
-                    + "ismd.dateRealArrival is not null AND "
+                    + "ismd.internalStockMovement.dateRealArrival is not null AND "
                     + "ismd.internalStockMovement.serverExist = true AND "
                     + "ismd.internalStockMovement.uploaded = false ",company,product);
     }
