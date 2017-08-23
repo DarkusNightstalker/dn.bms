@@ -64,7 +64,7 @@ public class SellerService extends GenericService<Seller, Long>   implements ISe
                 "SELECT " +
                     "s.supplier.identityNumber," +
                     "s.actor.identityNumber," +
-                    "s,description," +
+                    "s.description," +
                     "s.default_," +
                     "s.id," +
                     "s.createUser.username," +
@@ -84,7 +84,7 @@ public class SellerService extends GenericService<Seller, Long>   implements ISe
                 "SELECT " +
                     "s.supplier.identityNumber," +
                     "s.actor.identityNumber," +
-                    "s,description," +
+                    "s.description," +
                     "s.default_," +
                     "s.id," +
                     "s.createUser.username," +
