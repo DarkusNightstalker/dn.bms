@@ -28,7 +28,7 @@ public class StockReturnCustomerDetailService extends GenericService<StockReturn
     public BigDecimal getSumQuantityByCompanyProduct(Company company, Product product) {
         return (BigDecimal) dao.getByHQL(""
                 + "SELECT "
-                    + "SUM(srcd.quantity) "
+                    + "COALESCE(SUM(srcd.quantity),0) "
                 + "FROM StockReturnCustomerDetail srcd "
                 + "WHERE "
                     + "srcd.stockReturnCustomer.sale.company = ? AND "
