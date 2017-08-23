@@ -77,7 +77,7 @@ public class UoMService extends GenericService<UoM, Integer> implements IUoMServ
                     + "uom.active "
                 + "FROM UoM uom left join uom.editUser e "
                 + "WHERE "
-                    + "uom.createDate >= ? AND uom.editDate < ? "
+                    + "uom.createDate >= ? AND uom.createDate < ? "
                 + "ORDER BY uom.createDate", init,end);
     }
 
