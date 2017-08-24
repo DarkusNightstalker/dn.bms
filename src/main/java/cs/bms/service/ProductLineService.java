@@ -5,6 +5,8 @@ import cs.bms.model.ProductLine;
 import cs.bms.service.interfac.IProductLineService;
 import gkfire.hibernate.generic.GenericService;
 import gkfire.hibernate.generic.interfac.IGenericDao;
+
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,5 +39,36 @@ public class ProductLineService
     @Override
     public Integer getIdByName(String name) {
         return (Integer) dao.getByHQL("SELECT pl.id FROM ProductLine pl  WHERE pl.path LIKE ?", name);
+    }
+
+    @Override
+    public List<Object[]> getEditedByAfterDate(Date init, Date end, boolean b) {
+        return dao.listHQL("" +
+                "SELECT " +
+                    "pl.path," +
+                    "pl.name," +
+                    "pl.createUser.username," +
+                    "pl.createDate," +
+                    "e.username," +
+                    "pl.editDate " +
+                "FROM ProductLine pl LEFT JOIN pl.editUser e "
+                    + "WHERE "
+                    + "(pl.createDate >= ? AND pl.createDate < ?) ",init,end);
+    }
+
+    @Override
+    public List<Object[]> getCreatedByAfterDate(Date init, Date end) {
+        return dao.listHQL("" +
+                "SELECT " +
+                "pl.path," +
+                "pl.name," +
+                "pl.createUser.username," +
+                "pl.createDate," +
+                "e.username," +
+                "pl.editDate " +
+                "FROM ProductLine pl LEFT JOIN pl.editUser e "
+                + "WHERE "
+                + "(pl.editDate >= ? AND pl.editDate < ?) AND "
+                + "(pl.createDate < ? OR pl.createDate >= ?) ",init,end,init,end);
     }
 }

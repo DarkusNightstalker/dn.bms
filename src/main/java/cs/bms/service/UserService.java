@@ -70,7 +70,7 @@ public class UserService extends GenericService<User, Integer> implements IUserS
 
     @Override
     public List<Object[]> getCreateByAfterDate(Date init,Date end, String code) {
-        return this.dao.listHQL(""
+        List<Object[]> data = dao.listHQL(""
                 + "SELECT "
                     + "u.username,"
                     + "u.password,"
@@ -81,14 +81,23 @@ public class UserService extends GenericService<User, Integer> implements IUserS
                     + "u.createDate,"
                     + "e.username,"
                     + "u.editDate,"
+                    + "u.id,"
+                    + "u.id,"
+                    + "u.id,"
                     + "u.active "
                 + "FROM User u left join u.editUser e "
                 + "WHERE u.createDate >= ? AND u.createDate < ?", init,end);
+        data.forEach(item -> {
+            item[9] = dao.listHQL("SELECT r.name FROM User u join u.rols r WHERE u.id = ?",item[9]);
+            item[10] = dao.listHQL("SELECT dn.rucCompany,dn.paymentProof,dn.serie FROM User u join u.documentNumberings dn WHERE u.id = ?",item[10]);
+            item[11] = dao.listHQL("SELECT sp.entityName,sp.identifier FROM User u join u.specialPermissions sp WHERE u.id = ?",item[11]);
+        });
+        return data;
     }
 
     @Override
     public List<Object[]> getEditedByAfterDate(Date init,Date end, String companyCode, boolean b) {
-         return this.dao.listHQL(""
+        List<Object[]> data = dao.listHQL(""
                 + "SELECT "
                     + "u.username,"
                     + "u.password,"
@@ -99,11 +108,20 @@ public class UserService extends GenericService<User, Integer> implements IUserS
                     + "u.createDate,"
                     + "e.username,"
                     + "u.editDate,"
+                    + "u.id,"
+                    + "u.id,"
+                    + "u.id,"
                     + "u.active "
                 + "FROM User u left join u.editUser e "
                 + "WHERE "
                     + "(u.createDate < ? OR u.createDate >= ?) AND "
                     + "(u.editDate >= ? AND u.editDate < ?) ", init,end,init,end);
+        data.forEach(item -> {
+            item[9] = dao.listHQL("SELECT r.name FROM User u join u.rols r WHERE u.id = ?",item[9]);
+            item[10] = dao.listHQL("SELECT dn.rucCompany,dn.paymentProof.code,dn.serie FROM User u join u.documentNumberings dn WHERE u.id = ?",item[10]);
+            item[11] = dao.listHQL("SELECT sp.entityName,sp.identifier FROM User u join u.specialPermissions sp WHERE u.id = ?",item[11]);
+        });
+        return data;
     }
 
     @Override
@@ -124,7 +142,7 @@ public class UserService extends GenericService<User, Integer> implements IUserS
                             + "join r.permissions p "
                         + "WHERE u_.id = u.id"
                    + ") OR u.superUser = true)", username, AES.encrypt(password, AESKeys.USER_PASSWORD),codePermission)).intValue() != 0;
-     
+
     }
 
     @Override

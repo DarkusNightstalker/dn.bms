@@ -58,4 +58,9 @@ public class RolService extends GenericService<Rol, Integer> implements IRolServ
                     + "(r.editDate >= ? AND r.editDate < ?)", init, end,init,end);
     
     }
+
+    @Override
+    public Integer getIdByName(String name) {
+        return (Integer) dao.getByHQL("SELECT r.id FROM Rol r WHERE r.name LIKE ?",name);
+    }
 }

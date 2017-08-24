@@ -44,4 +44,43 @@ public class WorkShiftService extends GenericService<WorkShift, Integer> impleme
                     + "ws.company = ? AND "
                     + "ws.name LIKE ?", company, name);
     }
+
+    @Override
+    public List<Object[]> getCreatedByAfterDate(Date init, Date end, String company) {
+        return dao.listHQL("" +
+                "SELECT " +
+                    "ws.company.code," +
+                    "ws.name," +
+                    "ws.timeDeparture," +
+                    "ws.timeEntry," +
+                    "ws.createUser.username," +
+                    "ws.createDate," +
+                    "e.username," +
+                    "ws.editDate," +
+                    "ws.active " +
+                "FROM WorkShift ws " +
+                    "LEFT JOIN ws.editUser e "+
+                "WHERE "+
+                    "(ws.createDate >= ? AND ws.createDate < ?) AND ws.company.code LIKE ?",init,end,company);
+    }
+
+    @Override
+    public List<Object[]> getEditedByAfterDate(Date init, Date end, String company, boolean b) {
+        return dao.listHQL("" +
+                "SELECT " +
+                    "ws.company.code," +
+                    "ws.name," +
+                    "ws.timeDeparture," +
+                    "ws.timeEntry," +
+                    "ws.createUser.username," +
+                    "ws.createDate," +
+                    "e.username," +
+                    "ws.editDate," +
+                    "ws.active " +
+                "FROM WorkShift ws " +
+                    "LEFT JOIN ws.editUser e "+
+                "WHERE "+
+                "(ws.editDate >= ? AND ws.editDate < ?) AND "+
+                "(ws.createDate < ? OR ws.createDate >= ?) AND ws.company.code LIKE ?",init,end,init,end,company);
+    }
 }

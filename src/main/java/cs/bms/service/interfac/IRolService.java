@@ -12,4 +12,6 @@ public interface IRolService extends IGenericService<Rol, Integer> {
     public List<Object[]> getCreateByAfterDate(Date init, Date end);
 
     public List<Object[]> getEditedByAfterDate(Date init, Date end, boolean paramBoolean);
+
+    public Integer getIdByName(String name);
 }
