@@ -151,12 +151,27 @@ public class PaymentVoucherService extends GenericService<PaymentVoucher, Long> 
                     "e.username," +
                     "pv.editDate," +
                     "pv.active " +
-                "FROM PaymentVoucher pv");
+                "FROM PaymentVoucher pv left join pv.editUser e "
+                        + "WHERE"
+                        + "(pv.createDate >= ? AND pv.createDate < ?) ",init,end);
     }
 
     @Override
     public List<Object[]> getEditedByAfterDate(Date init, Date end, boolean b) {
-        return Collections.EMPTY_LIST;
+        return dao.listHQL("" +
+                "SELECT " +
+                "pv.numeration," +
+                "pv.dateExpiry," +
+                "pv.value," +
+                "pv.createUser.username," +
+                "pv.createDate," +
+                "e.username," +
+                "pv.editDate," +
+                "pv.active " +
+                "FROM PaymentVoucher pv left join pv.editUser e "
+                + "WHERE "
+                + "(pv.editDate >= ? AND pv.editDate < ?) AND "
+                + "(pv.createDate < ? OR pv.createDate >= ?) ",init,end,init,end);
     }
 
     @Override
