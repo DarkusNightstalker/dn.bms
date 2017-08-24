@@ -62,6 +62,7 @@ public class User implements AuditoryEntity<Integer, User>, EntityActivate {
     protected Date editDate;
     @Column(name = "active", nullable = false)
     protected Boolean active = Boolean.TRUE;
+
     @ManyToMany
     @JoinTable(name = "rol_has_user", joinColumns = {
         @JoinColumn(name = "id_user", nullable = false, updatable = false)}, inverseJoinColumns = {

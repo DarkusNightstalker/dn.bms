@@ -13,4 +13,8 @@ public interface IWorkShiftService extends IGenericService<WorkShift, Integer> {
     public List<Object[]> getBasicDataByCompany(Company paramCompany);
 
     public Integer getIdByCompanyName(Company company, String name);
+
+    public List<Object[]> getCreatedByAfterDate(Date init, Date end ,String company);
+
+    public List<Object[]> getEditedByAfterDate(Date lastUpdateDate, Date currentDateUpdate, String companyCode, boolean b);
 }
