@@ -60,41 +60,55 @@ public class SellerService extends GenericService<Seller, Long>   implements ISe
 
     @Override
     public List<Object[]> getCreatedByAfterDate(Date init, Date end) {
-        return dao.listHQL("" +
+        List<Object[]> data = dao.listHQL("" +
                 "SELECT " +
                     "s.supplier.identityNumber," +
-                    "s.actor.identityNumber," +
+                    "a.identityNumber," +
                     "s.description," +
                     "s.default_," +
                     "s.id," +
                     "s.createUser.username," +
                     "s.createDate," +
                     "e.username," +
-                    "s.editDate " +
+                    "s.editDate," +
+                    "s.active " +
                 "FROM Seller s " +
                     "LEFT JOIN s.editUser e " +
+                    "LEFT JOIN s.actor a " +
                 "WHERE " +
                     "s.createDate >= ? AND " +
                     "s.createDate < ?", init,end);
+        data.forEach(item -> {
+            item[4] =  dao.listHQL("SELECT p.barcode FROM Seller s join s.products p WHERE s.id = ?",item[4]);
+        });
+
+        return data;
     }
 
     @Override
     public List<Object[]> getEditedByAfterDate(Date init, Date end, boolean b) {
-        return dao.listHQL("" +
+        List<Object[]> data = dao.listHQL("" +
                 "SELECT " +
                     "s.supplier.identityNumber," +
-                    "s.actor.identityNumber," +
+                    "a.identityNumber," +
                     "s.description," +
                     "s.default_," +
                     "s.id," +
                     "s.createUser.username," +
                     "s.createDate," +
                     "e.username," +
-                    "s.editDate " +
+                    "s.editDate," +
+                    "s.active " +
                 "FROM Seller s " +
-                "LEFT JOIN s.editUser e " +
+                    "LEFT JOIN s.editUser e " +
+                    "LEFT JOIN s.actor a " +
                 "WHERE " +
                     "(s.createDate < ? OR s.createDate >= ?) AND " +
                     "s.editDate >= ? AND s.editDate < ?", init, end,init,end);
+
+        data.forEach(item -> {
+            item[4] =  dao.listHQL("SELECT p.barcode FROM Seller s join s.products p WHERE s.id = ?",item[4]);
+        });
+        return data;
     }
 }
