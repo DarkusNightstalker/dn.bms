@@ -140,6 +140,26 @@ public class PaymentVoucherService extends GenericService<PaymentVoucher, Long> 
     }
 
     @Override
+    public List<Object[]> getCreatedByAfterDate(Date init, Date end) {
+        return dao.listHQL("" +
+                "SELECT " +
+                    "pv.numeration," +
+                    "pv.dateExpiry," +
+                    "pv.value," +
+                    "pv.createUser.username," +
+                    "pv.createDate," +
+                    "e.username," +
+                    "pv.editDate," +
+                    "pv.active " +
+                "FROM PaymentVoucher pv");
+    }
+
+    @Override
+    public List<Object[]> getEditedByAfterDate(Date init, Date end, boolean b) {
+        return Collections.EMPTY_LIST;
+    }
+
+    @Override
     public void useVoucher(String code, User user) {
        this.dao.updateHQL(""
                 + "UPDATE PaymentVoucher "

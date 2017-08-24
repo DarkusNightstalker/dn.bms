@@ -82,4 +82,8 @@ public interface IPaymentVoucherService extends IGenericService<PaymentVoucher, 
     public Long getIdByNumeration(String string);
 
     public List<String> getUsedNumerations(Date min, Date max);
+
+    public List<Object[]> getCreatedByAfterDate(Date init, Date end);
+
+    public List<Object[]> getEditedByAfterDate(Date init, Date end, boolean b);
 }
