@@ -50,7 +50,8 @@ public class ProductLineService
                     "pl.createUser.username," +
                     "pl.createDate," +
                     "e.username," +
-                    "pl.editDate " +
+                    "pl.editDate," +
+                    "pl.active " +
                 "FROM ProductLine pl LEFT JOIN pl.editUser e "
                     + "WHERE "
                     + "(pl.createDate >= ? AND pl.createDate < ?) ",init,end);
@@ -60,12 +61,13 @@ public class ProductLineService
     public List<Object[]> getCreatedByAfterDate(Date init, Date end) {
         return dao.listHQL("" +
                 "SELECT " +
-                "pl.path," +
-                "pl.name," +
-                "pl.createUser.username," +
-                "pl.createDate," +
-                "e.username," +
-                "pl.editDate " +
+                    "pl.path," +
+                    "pl.name," +
+                    "pl.createUser.username," +
+                    "pl.createDate," +
+                    "e.username," +
+                    "pl.editDate," +
+                    "pl.active " +
                 "FROM ProductLine pl LEFT JOIN pl.editUser e "
                 + "WHERE "
                 + "(pl.editDate >= ? AND pl.editDate < ?) AND "
