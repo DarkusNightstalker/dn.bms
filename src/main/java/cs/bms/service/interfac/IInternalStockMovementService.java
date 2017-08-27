@@ -5,6 +5,7 @@ import cs.bms.model.PaymentProof;
 import gkfire.hibernate.generic.interfac.IGenericService;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface IInternalStockMovementService extends IGenericService<InternalStockMovement, Long> {
 
@@ -17,4 +18,6 @@ public interface IInternalStockMovementService extends IGenericService<InternalS
     public void completeUploaded();
 
     public Long getIdByFullDocument(PaymentProof paymentProof, String serie, String documentNumber);
+
+    public List<Map<String, Object>> getForSynchroUpload(Date lastUploadISM, Date currentUploadDatetime, String companyCode);
 }

@@ -5,6 +5,7 @@ import cs.bms.model.Sale;
 import gkfire.hibernate.generic.interfac.IGenericService;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Interfaz SERVICE para el modelo SALE
@@ -65,5 +66,7 @@ public interface ISaleService extends IGenericService<Sale, Long> {
     public List<Object[]> listPointsWhenNotUploaded();
 
     public void completeUploadPoints();
+
+    public List<Map<String,Object>> getForSynchroUpload();
 
 }

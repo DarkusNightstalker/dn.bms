@@ -6,6 +6,7 @@ import cs.bms.service.interfac.IPurchaseService;
 import gkfire.hibernate.generic.GenericService;
 import gkfire.hibernate.generic.interfac.IGenericDao;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,5 +80,64 @@ public class PurchaseService extends GenericService<Purchase, Long> implements I
                     + "p.paymentProof.code LIKE ? AND "
                     + "p.serie LIKE ? AND "
                     + "p.documentNumber LIKE ?",supplierIdentityNumber,paymentProofCode,serie,documentNumber);
+    }
+
+    @Override
+    public List<Map<String, Object>> getForSynchroUpload() {
+        
+       List<Map<String,Object>> data = dao.listHQL(""
+               + "SELECT "
+               + "new map("
+                    + "p.paymentProof.code as paymentProofCode,"
+                    + "p.serie as serie,"
+                    + "p.documentNumber as documentNumber,"
+                    + "p.electronic as electronic,"
+                    + "s.identityNumber as identityNumber,"
+                    + "p.supplierName as supplierName,"
+                    + "p.subtotal as subtotal,"
+                    + "p.igv as igv,"
+                    + "p.subtotalDiscount as subtotalDiscount,"
+                    + "p.igvDiscount as igvDiscount,"
+                    + "p.companyArrival.code as companyArrivalCode,"
+                    + "p.dateIssue as dateIssue,"
+                    + "p.dateDue as dateDue,"
+                    + "p.createUser.username as createUsername,"
+                    + "p.createDate as createDate,"
+                    + "e.username as editUsername,"
+                    + "p.editDate as editDate,"
+                    + "p.active as active,"
+                    + "p.id as details,"
+                    + "p.id as payments"
+               + ") "
+               + "FROM Purchase p LEFT JOIN p.supplier s LEFT JOIN p.editUser e");
+       data.forEach(item -> {
+           item.put("details", dao.listHQL(""
+                    + "SELECT "
+                    + "new map("
+                        + "pd.product.barcode as productBarcode,"
+                        + "pd.uom.code as uomCode,"
+                        + "pd.productName as productName,"
+                        + "pd.quantity as quantity,"
+                        + "pd.unitPrice as unitPrice,"
+                        + "pd.subtotal as subtotal,"
+                        + "pd.igv as igv "
+                    + ") "
+                    + "FROM PurchaseDetail pd WHERE pd.purchase.id = ?",item.get("details")));
+           item.put("payments", dao.listHQL(""
+                    + "SELECT "
+                    + "new map( "
+                        + "pp.datePayment as datePayment,"
+                        + "pp.quantity as quantity,"
+                        + "pp.description as description,"
+                        + "pp.companyDisbursement.code as companyDisbursementCode,"
+                        + "pp.createUser.username as createUsername,"
+                        + "pp.createDate as createDate,"
+                        + "e.username as editUsername,"
+                        + "pp.editDate as editDate,"
+                        + "pp.active as active "
+                    + ") "
+                    + "FROM PurchasePayment pp LEFT JOIN pp.editUser e WHERE pp.purchase.id = ?",item.get("payments")));
+       });       
+       return data;
     }
 }

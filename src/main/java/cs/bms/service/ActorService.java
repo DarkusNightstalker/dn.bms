@@ -9,6 +9,7 @@ import gkfire.hibernate.generic.interfac.IGenericDao;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -267,5 +268,33 @@ public class ActorService extends GenericService<Actor, Long> implements IActorS
                     + "editDate = ?,"
                     + "editUser = ? "
                 + "WHERE identityNumber = ?", points, new Date(), user, identityNumber);
+    }
+
+    @Override
+    public List<Map<String, Object>> getForSynchroUpload() {
+        return dao.listHQL(""
+                + "SELECT "
+                + "new map("
+                    + "a.identityDocument.code as identityDocumentCode,"
+                    + "a.identityNumber as identityNumber,"
+                    + "a.name as name,"
+                    + "a.other as other,"
+                    + "a.address as address,"
+                    + "a.customer as customer,"
+                    + "a.supplier as supplier,"
+                    + "a.points as points,"
+                    + "a.representative as representative,"
+                    + "a.synchronized_ as synchronized,"
+                    + "u.name as ubigeoName,"
+                    + "a.createUser.username as createUsername,"
+                    + "a.createDate as createDate,"
+                    + "e.username as editUsername,"
+                    + "a.editDate as editDate,"
+                    + "a.active as active"
+                + ") "
+                + "FROM Actor a "
+                    + "left join a.ubigeo u "
+                    + "left join a.editUser e "
+                + "WHERE a.uploaded = false");
     }
 }
