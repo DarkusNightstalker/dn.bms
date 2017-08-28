@@ -34,24 +34,57 @@ public class DataCompanyService extends GenericService<DataCompany, Integer> imp
     }
 
     @Override
+    public String getStringValue(String propertyName, String defaultValue) throws IOException, ClassNotFoundException {
+        String data = (String) getValue(propertyName);
+        return data == null ? defaultValue : data;
+    }
+
+    @Override
     public Integer getIntValue(String propertyName) throws IOException, ClassNotFoundException {
         return (Integer) getValue(propertyName);
     }
 
     @Override
+    public Integer getIntValue(String propertyName, Integer defaultValue) throws IOException, ClassNotFoundException {
+        Integer data = (Integer) getValue(propertyName);
+        return data == null ? defaultValue : data;
+    }
+
+    @Override
     public Double getDoubleValue(String propertyName) throws IOException, ClassNotFoundException {
         return (Double) getValue(propertyName);
+    } 
+    
+    @Override
+    public Double getDoubleValue(String propertyName, Double defaultValue) throws IOException, ClassNotFoundException {
+        Double data = (Double) getValue(propertyName);
+        return data == null ? defaultValue : data;
     }
+
 
     @Override
     public BigDecimal getBigDecimalValue(String propertyName) throws IOException, ClassNotFoundException {
         return (BigDecimal) getValue(propertyName);
+    } 
+    
+    @Override
+    public BigDecimal getBigDecimalValue(String propertyName, BigDecimal defaultValue) throws IOException, ClassNotFoundException {
+        BigDecimal data = (BigDecimal) getValue(propertyName);
+        return data == null ? defaultValue : data;
     }
+
 
     @Override
     public Date getDateValue(String propertyName) throws IOException, ClassNotFoundException {
         return (Date) getValue(propertyName);
     }
+    
+    @Override
+    public Date getDateValue(String propertyName, Date defaultValue) throws IOException, ClassNotFoundException {
+        Date data = (Date) getValue(propertyName);
+        return data == null ? defaultValue : data;
+    }
+
 
     @Override
     public void saveOrUpdate(String propertyName, Object value) throws IOException, ClassNotFoundException {
@@ -84,9 +117,21 @@ public class DataCompanyService extends GenericService<DataCompany, Integer> imp
     public Long getLongValue(String propertyName) throws IOException, ClassNotFoundException {
         return (Long) getValue(propertyName);
     }
+    @Override
+    public Long getLongValue(String propertyName, Long defaultValue) throws IOException, ClassNotFoundException {
+        Long data = (Long) getValue(propertyName);
+        return data == null ? defaultValue : data;
+    }
 
     @Override
-    public Boolean getBooleanValue(String propertyName)  throws IOException, ClassNotFoundException{
+    public Boolean getBooleanValue(String propertyName) throws IOException, ClassNotFoundException {
         return (Boolean) getValue(propertyName);
     }
+
+    @Override
+    public Boolean getBooleanValue(String propertyName, Boolean defaultValue) throws IOException, ClassNotFoundException {
+        Boolean data = (Boolean) getValue(propertyName);
+        return data == null ? defaultValue : data;
+    }
+
 }

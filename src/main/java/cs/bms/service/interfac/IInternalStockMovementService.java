@@ -15,7 +15,7 @@ public interface IInternalStockMovementService extends IGenericService<InternalS
 
     public Long countNotUploaded();
 
-    public void completeUploaded();
+    public void completeUploaded(Date date);
 
     public Long getIdByFullDocument(PaymentProof paymentProof, String serie, String documentNumber);
 

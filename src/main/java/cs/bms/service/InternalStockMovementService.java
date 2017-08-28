@@ -131,8 +131,8 @@ public class InternalStockMovementService extends GenericService<InternalStockMo
     }
 
     @Override
-    public void completeUploaded() {
-        dao.updateHQL("UPDATE InternalStockMovement ism SET ism.uploaded = ? WHERE ism.uploaded = ?",true,false);
+    public void completeUploaded(Date date) {
+        dao.updateHQL("UPDATE InternalStockMovement ism SET ism.uploaded = ? WHERE ((ism.createDate >= ? AND ism.createDate < ?) OR (ism.editDate >= ? AND ism.editDate < ?))",true,date,date,date,date);
     }
 
     @Override

@@ -115,11 +115,10 @@ public  interface IActorService extends IGenericService<Actor, Long> {
     
     public Long countNotUploaded();
 
-    public void completeUploaded();
+    public void completeUploaded(Date date);
 
-    public List<Object[]> getDataWhenNotUploaded();
+    public List<Map<String, Object>> getDataWhenNotUploaded(Date init, Date end);
 
-    public List<Map<String, Object>> getForSynchroUpload();
 
 
 }

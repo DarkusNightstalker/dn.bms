@@ -86,20 +86,30 @@ public class SaleService extends GenericService<Sale, Long> implements ISaleServ
     }
 
     @Override
+    public List<Object[]> listPointsWhenNotUploaded(Date date) {
+        return dao.listHQL(""
+                + "SELECT "
+                    + "s.customer.identityNumber,"
+                    + "SUM(s.points-s.spendPoints) "
+                + "FROM Sale s "
+                + "WHERE s.uploadPoints = false AND (s.createDate < ? OR s.editDate < ?) "
+                + "GROUP BY s.customer.identityNumber",date,date);
+    }
+
+    @Override
     public List<Object[]> listPointsWhenNotUploaded() {
         return dao.listHQL(""
                 + "SELECT "
                     + "s.customer.identityNumber,"
                     + "SUM(s.points-s.spendPoints) "
                 + "FROM Sale s "
-                + "WHERE s.uploadPoints = false "
-                + "GROUP BY s.customer.identityNumber");
+                + "WHERE s.uploadPoints = false");
     }
 
     @Override
-    public void completeUploadPoints() {
+    public void completeUploadPoints(Date date) {
         try {
-            dao.updateHQL("UPDATE Sale s SET s.uploadPoints = true WHERE s.uploadPoints = false");
+            dao.updateHQL("UPDATE Sale s SET s.uploadPoints = true WHERE s.uploadPoints = false AND (s.createDate < ? OR s.editDate < ?) ",date,date);
         } catch (Exception ex) {
             
         }
