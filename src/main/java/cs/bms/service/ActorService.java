@@ -9,6 +9,7 @@ import gkfire.hibernate.generic.interfac.IGenericDao;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -206,56 +207,36 @@ public class ActorService extends GenericService<Actor, Long> implements IActorS
     }
 
     @Override
-    public void completeUploaded() {
-        dao.updateHQL("UPDATE Actor a SET a.uploaded = ? WHERE a.uploaded = ?",true,false);
+    public void completeUploaded(Date date) {
+        dao.updateHQL("UPDATE Actor a SET a.uploaded = ? WHERE ((a.createDate >=  ? AND a.createDate < ?) OR (a.editDate >= ? AND a.editDate < ?))",true,date,date,date,date);
     }
 
     @Override
-    public List<Object[]> getDataWhenNotUploaded() {
-//     Actor actor = new Actor();
-//                    actor.setId(actorService.getIdByIdentityNumber(item.getString(1)));
-//                    actor.setIdentityDocument(new IdentityDocument(identityDocumentService.getIdByCode(item.getString(0))));
-//                    actor.setIdentityNumber(item.getString(1));
-//                    actor.setName(item.getString(2));
-//                    actor.setOther(item.getString(3));
-//                    actor.setAddress(item.getString(4));
-//                    actor.setCustomer(item.getBoolean(5));
-//                    actor.setSupplier(item.getBoolean(6));
-//                    actor.setPoints(item.getJsonNumber(7).longValue());
-//                    actor.setRepresentative(item.getString(8));
-//                    actor.setSynchronized_(item.getBoolean(9));
-//                    if (item.getJsonNumber(10) != null) {
-//                        actor.setUbigeo(new Ubigeo(item.getJsonNumber(10).intValue()));
-//                    }
-//                    actor.setUploaded(true);
-//                    actor.setCreateUser(new User(userService.getIdByUsername(item.getString(11))));
-//                    actor.setCreateDate(fullDateFormat.parse(item.getString(12)));
-//                    if (item.getJsonNumber(13) != null) {
-//                        actor.setEditUser(new User(userService.getIdByUsername(item.getString(13))));
-//                        actor.setEditDate(new Date());
-//                    }
+    public List<Map<String, Object>> getDataWhenNotUploaded(Date init, Date end) {
         return dao.listHQL(""
                 + "SELECT "
-                    + "a.identityDocument.code,"
-                    + "a.identityNumber,"
-                    + "a.name,"
-                    + "a.other,"
-                    + "a.address,"
-                    + "a.customer,"
-                    + "a.supplier,"
-                    + "a.points,"
-                    + "a.representative,"
-                    + "a.synchronized_,"
-                    + "u.name,"
-                    + "a.createUser.username,"
-                    + "a.createDate,"
-                    + "e.username,"
-                    + "a.editDate,"
-                    + "a.active "
+                + "new map("
+                    + "a.identityDocument.code as identityDocumentCode,"
+                    + "a.identityNumber as identityNumber,"
+                    + "a.name as name,"
+                    + "a.other as other,"
+                    + "a.address as address,"
+                    + "a.customer as customer,"
+                    + "a.supplier as supplier,"
+                    + "a.points as points,"
+                    + "a.representative as representative,"
+                    + "a.synchronized_ as synchronized,"
+                    + "u.name as ubigeoName,"
+                    + "a.createUser.username as createUsername,"
+                    + "a.createDate as createDate,"
+                    + "e.username as editUsername,"
+                    + "a.editDate as editDate,"
+                    + "a.active as active"
+                + ") "
                 + "FROM Actor a "
                     + "left join a.ubigeo u "
                     + "left join a.editUser e "
-                + "WHERE a.uploaded = false");
+                + "WHERE a.uploaded = false AND ((a.createDate >=  ? AND a.createDate < ?) OR (a.editDate >= ? AND a.editDate < ?))",init,end,init,end);
     }
 
     @Override

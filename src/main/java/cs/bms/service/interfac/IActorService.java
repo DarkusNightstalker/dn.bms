@@ -5,6 +5,7 @@ import cs.bms.model.User;
 import gkfire.hibernate.generic.interfac.IGenericService;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -114,8 +115,10 @@ public  interface IActorService extends IGenericService<Actor, Long> {
     
     public Long countNotUploaded();
 
-    public void completeUploaded();
+    public void completeUploaded(Date date);
 
-    public List<Object[]> getDataWhenNotUploaded();
+    public List<Map<String, Object>> getDataWhenNotUploaded(Date init, Date end);
+
+
 
 }

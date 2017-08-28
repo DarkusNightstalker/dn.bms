@@ -9,6 +9,8 @@ import gkfire.hibernate.generic.GenericService;
 import gkfire.hibernate.generic.interfac.IGenericDao;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -38,8 +40,27 @@ public class PurchasePaymentService extends GenericService<PurchasePayment, Long
     public BigDecimal getCurrentPay(Purchase selected) {
         return (BigDecimal) dao.getByHQL(""
                 + "SELECT "
-                    + "COALESCE(SUM(pp.quantity),0) "
+                + "COALESCE(SUM(pp.quantity),0) "
                 + "FROM PurchasePayment pp "
                 + "WHERE pp.purchase  = ?", selected);
+    }
+
+    @Override
+    public List<Map<String, Object>> getForSynchroUpload() {
+        List<Map<String, Object>> data = dao.listHQL(""
+                + "SELECT "
+                + "new map( "
+                    + "pp.datePayment as datePayment,"
+                    + "pp.quantity as quantity,"
+                    + "pp.description as description,"
+                    + "pp.companyDisbursement.code as companyDisbursementCode,"
+                    + "pp.createUser.username as createUsername,"
+                    + "pp.createDate as createDate,"
+                    + "e.username as editUsername,"
+                    + "pp.editDate as editDate,"
+                    + "pp.active as active "
+                + ") "
+                + "FROM PurchasePayment pp LEFT JOIN pp.editUser e WHERE pp.purchase is null");
+        return data;
     }
 }

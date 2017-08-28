@@ -9,8 +9,7 @@ import gkfire.hibernate.generic.interfac.IGenericDao;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -87,22 +86,93 @@ public class SaleService extends GenericService<Sale, Long> implements ISaleServ
     }
 
     @Override
-    public List<Object[]> listPointsWhenNotUploaded() {
+    public List<Object[]> listPointsWhenNotUploaded(Date date) {
         return dao.listHQL(""
                 + "SELECT "
-                + "s.customer.identityNumber,"
-                + "SUM(s.points-s-spendPoints) "
+                    + "s.customer.identityNumber,"
+                    + "SUM(s.points-s.spendPoints) "
                 + "FROM Sale s "
-                + "WHERE s.customer.uploaded = true  AND s.uploadPoints = false "
-                + "GROUP BY s.customer.identityNumber");
+                + "WHERE s.uploadPoints = false AND (s.createDate < ? OR s.editDate < ?) "
+                + "GROUP BY s.customer.identityNumber",date,date);
     }
 
     @Override
-    public void completeUploadPoints() {
+    public List<Object[]> listPointsWhenNotUploaded() {
+        return dao.listHQL(""
+                + "SELECT "
+                    + "s.customer.identityNumber,"
+                    + "SUM(s.points-s.spendPoints) "
+                + "FROM Sale s "
+                + "WHERE s.uploadPoints = false");
+    }
+
+    @Override
+    public void completeUploadPoints(Date date) {
         try {
-            dao.updateHQL("UPDATE Sale s SET s.uploadPoints = true WHERE s.uploadPoints = false");
+            dao.updateHQL("UPDATE Sale s SET s.uploadPoints = true WHERE s.uploadPoints = false AND (s.createDate < ? OR s.editDate < ?) ",date,date);
         } catch (Exception ex) {
             
         }
+    }
+
+    @Override
+    public List<Map<String,Object>> getForSynchroUpload() {
+       List<Map<String,Object>> data = dao.listHQL(""
+               + "SELECT "
+               + "new map("
+                    + "s.paymentProof.code as paymentProofCode,"
+                    + "s.serie as serie,"
+                    + "s.documentNumber as documentNumber,"
+                    + "c.identityNumber as identityNumber,"
+                    + "s.customerName as customerName,"
+                    + "s.electronic as electronic,"
+                    + "s.sent as sent,"
+                    + "s.verified as verified,"
+                    + "s.credit as credit,"
+                    + "s.points as points,"
+                    + "s.customerPoints as customerPoints,"
+                    + "s.spendPoints as spendPoints,"
+                    + "s.subtotal as subtotal,"
+                    + "s.igv as igv,"
+                    + "s.subtotalDiscount as subtotalDiscount,"
+                    + "s.igvDiscount as igvDiscount,"
+                    + "s.company.code as companyCode,"
+                    + "s.dateIssue as dateIssue,"
+                    + "s.dateDue as dateDue,"
+                    + "s.createUser.username as createUsername,"
+                    + "s.createDate as createDate,"
+                    + "e.username as editUsername,"
+                    + "s.editDate as editDate,"
+                    + "s.uploadPoints as uploadPoints,"
+                    + "s.total as total,"
+                    + "s.active as active,"
+                    + "s.id as details,"
+                    + "s.id as payments"
+               + ") "
+               + "FROM Sale s LEFT JOIN s.editUser e LEFT JOIN s.customer c");
+       data.forEach(item -> {
+           item.put("details", dao.listHQL(""
+                    + "SELECT "
+                    + "new map("
+                        + "sd.product.barcode as productBarcode,"
+                        + "sd.uom.code as uomCode,"
+                        + "sd.subtotal as subtotal,"
+                        + "sd.productName as productName,"
+                        + "sd.quantity as quantity,"
+                        + "sd.unitPrice as unitPrice,"
+                        + "sd.unitCost as unitCost,"
+                        + "sd.pointsPrice as pointsPrice"
+                    + ") "
+                    + "FROM SaleDetail sd WHERE sd.sale.id = ?",item.get("details")));
+           item.put("payments", dao.listHQL(""
+                    + "SELECT "
+                    + "new map("
+                        + "sp.datePayment as datePayment,"
+                        + "sp.quantity as quantity,"
+                        + "sp.visa as visa "
+                    + ") "
+                    + "FROM SalePayment sp WHERE sp.sale.id = ?",item.get("payments")));
+       });       
+       return data;
     }
 }
