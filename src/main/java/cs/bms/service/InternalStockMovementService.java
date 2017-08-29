@@ -160,7 +160,7 @@ public class InternalStockMovementService extends GenericService<InternalStockMo
                     + "c.identityNumber as carrierIdentityNumber,"
                     + "ism.dateArrival as dateArrival,"
                     + "ism.dateRealArrival as dateRealArrival,"   
-                    + "ism.dateShipping as dateShopping,"
+                    + "ism.dateShipping as dateShipping,"
                     + "ism.driverLicense as driverLicense,"            
                     + "ism.electronic as electronic,"
                     + "ism.operationTypeSource.code as operationTypeSourceCode," 
