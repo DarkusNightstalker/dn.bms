@@ -103,7 +103,8 @@ public class SaleService extends GenericService<Sale, Long> implements ISaleServ
                     + "s.customer.identityNumber,"
                     + "SUM(s.points-s.spendPoints) "
                 + "FROM Sale s "
-                + "WHERE s.uploadPoints = false");
+                + "WHERE s.uploadPoints = false "
+                + "GROUP BY s.customer.identityNumber");
     }
 
     @Override
