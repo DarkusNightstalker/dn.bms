@@ -193,7 +193,7 @@ public class InternalStockMovementService extends GenericService<InternalStockMo
                         + "ismd.weight as weight,"
                         + "uomw.code as uomWeightCode"
                     + ") "
-                    + "FROM InternalStockMovementDetail ismd left join ismd.weightUoM uomw WHERE"
+                    + "FROM InternalStockMovementDetail ismd left join ismd.weightUoM uomw WHERE "
                     + "ismd.internalStockMovement.id = ?",item.get("details")));
         });
         
