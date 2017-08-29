@@ -89,7 +89,7 @@ public class UserService extends GenericService<User, Integer> implements IUserS
                 + "WHERE u.createDate >= ? AND u.createDate < ?", init,end);
         data.forEach(item -> {
             item[9] = dao.listHQL("SELECT r.name FROM User u join u.rols r WHERE u.id = ?",item[9]);
-            item[10] = dao.listHQL("SELECT dn.rucCompany,dn.paymentProof,dn.serie FROM User u join u.documentNumberings dn WHERE u.id = ?",item[10]);
+            item[10] = dao.listHQL("SELECT dn.rucCompany,dn.paymentProof.code,dn.serie FROM User u join u.documentNumberings dn WHERE u.id = ?",item[10]);
             item[11] = dao.listHQL("SELECT sp.entityName,sp.identifier FROM User u join u.specialPermissions sp WHERE u.id = ?",item[11]);
         });
         return data;
