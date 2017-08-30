@@ -32,4 +32,9 @@ public class PermissionService
     public List<String> getPermissionCodeFromUser(User user) {
         return this.dao.getPermissionCodeFromUser(user);
     }
+
+    @Override
+    public Integer getIdByCode(String code) {
+        return (Integer)dao.getByHQL("SELECT p.id FROM Permission p WHERE p.code LIKE ?",code);
+    }
 }

@@ -30,32 +30,46 @@ public class RolService extends GenericService<Rol, Integer> implements IRolServ
 
     @Override
     public List<Object[]> getCreateByAfterDate(Date init,Date end) {
-        return this.dao.listHQL(""
+        List<Object[]> data = this.dao.listHQL(""
                 + "SELECT "
                     + "r.name,"
-                    + "r.active,"
                     + "r.createUser.username,"
                     + "r.createDate,"
                     + "e.username,"
-                    + "r.editDate "
+                    + "r.editDate,"
+                    + "r.active,"
+                    + "r.id,"
+                    + "r.id "
                 + "FROM Rol r left join r.editUser e "
-                + "WHERE r.createDate >= ? AND r.createDate < ?", init,end);        
+                + "WHERE r.createDate >= ? AND r.createDate < ?", init,end);
+        data.forEach(item->{
+            item[6] = dao.listHQL("SELECT u.username FROM Rol r join r.users u WHERE r.id = ?",item[6]);
+            item[7] = dao.listHQL("SELECT p.code FROM Rol r join r.permissions p WHERE r.id = ?",item[7]);
+        });
+        return data;
     }
 
     @Override
     public List<Object[]> getEditedByAfterDate(Date init,Date end, boolean b) {
-        return this.dao.listHQL(""
+        List<Object[]> data =  this.dao.listHQL(""
                 + "SELECT "
                     + "r.name,"
-                    + "r.active,"
                     + "r.createUser.username,"
                     + "r.createDate,"
                     + "e.username,"
-                    + "r.editDate "
+                    + "r.editDate,"
+                    + "r.active,"
+                    + "r.id,"
+                    + "r.id "
                 + "FROM Rol r left join r.editUser e "
                 + "WHERE "
                     + "(r.createDate < ? OR r.createDate >= ?) AND "
                     + "(r.editDate >= ? AND r.editDate < ?)", init, end,init,end);
+        data.forEach(item->{
+            item[6] = dao.listHQL("SELECT u.username FROM Rol r join r.users u WHERE r.id = ?",item[6]);
+            item[7] = dao.listHQL("SELECT p.code FROM Rol r join r.permissions p WHERE r.id = ?",item[7]);
+        });
+        return data;
     
     }
 
