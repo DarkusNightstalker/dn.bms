@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class InternalStockMovementDetailDao extends GenericDao<InternalStockMovementDetail, Long> implements IInternalStockMovementDetailDao {
 
+    @org.springframework.transaction.annotation.Transactional(readOnly = false, rollbackFor = Exception.class)
     @Override
     public void deleteByExcludeIds(InternalStockMovement m, List<Long> ids) {
         if(ids.isEmpty()) return;
