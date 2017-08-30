@@ -68,7 +68,7 @@ public class InternalStockMovementService extends GenericService<InternalStockMo
                         + "ismd.quantity,"
                         + "ismd.weight,"
                         + "uomw.code "
-                    + "FROM InternalStockMovementDetail ismd left join ismd.weightUoM uomw WHERE"
+                    + "FROM InternalStockMovementDetail ismd left join ismd.weightUoM uomw WHERE "
                     + "ismd.internalStockMovement.id = ?",item[21]);
         });
         
@@ -118,7 +118,7 @@ public class InternalStockMovementService extends GenericService<InternalStockMo
                         + "ismd.quantity,"
                         + "ismd.weight,"
                         + "uomw.code "
-                    + "FROM InternalStockMovementDetail ismd left join ismd.weightUoM uomw WHERE"
+                    + "FROM InternalStockMovementDetail ismd left join ismd.weightUoM uomw WHERE "
                     + "ismd.internalStockMovement.id = ?",item[21]);
         });
         

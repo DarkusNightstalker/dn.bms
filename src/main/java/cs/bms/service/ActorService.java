@@ -212,8 +212,8 @@ public class ActorService extends GenericService<Actor, Long> implements IActorS
     }
 
     @Override
-    public List<Map<String, Object>> getDataWhenNotUploaded(Date init, Date end) {
-        return dao.listHQL(""
+    public List<Map<String, Object>> getDataWhenNotUploaded(Date init, Date end,boolean onlyCreated) {
+        return onlyCreated ? dao.listHQL(""
                 + "SELECT "
                 + "new map("
                     + "a.identityDocument.code as identityDocumentCode,"
@@ -236,7 +236,35 @@ public class ActorService extends GenericService<Actor, Long> implements IActorS
                 + "FROM Actor a "
                     + "left join a.ubigeo u "
                     + "left join a.editUser e "
-                + "WHERE a.uploaded = false AND ((a.createDate >=  ? AND a.createDate < ?) OR (a.editDate >= ? AND a.editDate < ?))",init,end,init,end);
+                + "WHERE a.uploaded = false AND " +
+                "(a.createDate >=  ? AND a.createDate < ?)",init,end)
+                :
+                dao.listHQL(""
+                + "SELECT "
+                + "new map("
+                    + "a.identityDocument.code as identityDocumentCode,"
+                    + "a.identityNumber as identityNumber,"
+                    + "a.name as name,"
+                    + "a.other as other,"
+                    + "a.address as address,"
+                    + "a.customer as customer,"
+                    + "a.supplier as supplier,"
+                    + "a.points as points,"
+                    + "a.representative as representative,"
+                    + "a.synchronized_ as synchronized,"
+                    + "u.name as ubigeoName,"
+                    + "a.createUser.username as createUsername,"
+                    + "a.createDate as createDate,"
+                    + "e.username as editUsername,"
+                    + "a.editDate as editDate,"
+                    + "a.active as active"
+                + ") "
+                + "FROM Actor a "
+                    + "left join a.ubigeo u "
+                    + "left join a.editUser e "
+                + "WHERE a.uploaded = false AND " +
+                "((a.createDate >=  ? AND a.createDate < ?) OR " +
+                "(a.editDate >= ? AND a.editDate < ?))",init,end,init,end);
     }
 
     @Override
